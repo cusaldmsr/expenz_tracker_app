@@ -44,6 +44,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: _fullNameController,
                         decoration: InputDecoration(
                           labelText: 'Full Name',
                           labelStyle: TextStyle(color: kGrey),
@@ -54,6 +55,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           labelText: 'Email Address',
                           labelStyle: TextStyle(color: kGrey),
@@ -64,6 +66,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _phoneController,
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
                           labelStyle: TextStyle(color: kGrey),
@@ -74,6 +77,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
@@ -85,6 +89,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _confirmPasswordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
