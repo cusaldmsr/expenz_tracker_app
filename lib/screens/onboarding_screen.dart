@@ -15,6 +15,8 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
+  bool showDetailsPage = false;
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +28,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 // Onboarding Screens
                 PageView(
                   controller: _controller,
+                  onPageChanged: (index) {
+                    setState(() {
+                      showDetailsPage = index == 3 ? true : false;
+                    });
+                  },
                   children: [
                     FrontPage(),
                     ShearedOnboardingScreen(
@@ -75,7 +82,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           curve: Curves.easeInOut,
                         );
                       },
-                      child: CustomButton(text: "Next", color: kMainColor),
+                      child: CustomButton(
+                        text: showDetailsPage ? "Get Started" : "Next",
+                        color: kMainColor,
+                      ),
                     ),
                   ),
                 ),
