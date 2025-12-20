@@ -85,11 +85,11 @@ flutter:
         - asset: assets/fonts/Inter_18pt-BoldItalic.ttf
           weight: 700
         - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
-          weight: 700
+          weight: 800
         - asset: assets/fonts/Inter_18pt-ExtraBoldItalic.ttf
-          weight: 700
+          weight: 800
         - asset: assets/fonts/Inter_18pt-ExtraLight.ttf
-          weight: 300
+          weight: 200
         - asset: assets/fonts/Inter_18pt-Italic.ttf
           weight: 300
         - asset: assets/fonts/Inter_18pt-Light.ttf
