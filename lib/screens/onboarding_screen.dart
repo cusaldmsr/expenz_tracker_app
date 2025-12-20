@@ -1,4 +1,6 @@
+import 'package:expenz_tracker_app/data/onboarding_data.dart';
 import 'package:expenz_tracker_app/screens/onboarding/front_page.dart';
+import 'package:expenz_tracker_app/screens/onboarding/sheared_onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -16,13 +18,17 @@ class OnboardingScreen extends StatelessWidget {
                 PageView(
                   children: [
                     FrontPage(),
-                    Container(
-                      color: Colors.green,
-                      child: const Center(child: Text('Onboarding Screen 2')),
+                    ShearedOnboardingScreen(
+                      title: OnboardingData.onboardingDataList[0].title,
+                      description:
+                          OnboardingData.onboardingDataList[0].description,
+                      imagePath: OnboardingData.onboardingDataList[0].imagePath,
                     ),
-                    Container(
-                      color: Colors.blue,
-                      child: const Center(child: Text('Onboarding Screen 3')),
+                    ShearedOnboardingScreen(
+                      title: OnboardingData.onboardingDataList[1].title,
+                      description:
+                          OnboardingData.onboardingDataList[1].description,
+                      imagePath: OnboardingData.onboardingDataList[1].imagePath,
                     ),
                   ],
                 ),
