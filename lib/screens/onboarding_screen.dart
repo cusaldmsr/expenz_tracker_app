@@ -1,3 +1,4 @@
+import 'package:expenz_tracker_app/screens/onboarding/front_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -14,10 +15,7 @@ class OnboardingScreen extends StatelessWidget {
                 // Onboarding Screens
                 PageView(
                   children: [
-                    Container(
-                      color: Colors.red,
-                      child: const Center(child: Text('Onboarding Screen 1')),
-                    ),
+                    FrontPage(),
                     Container(
                       color: Colors.green,
                       child: const Center(child: Text('Onboarding Screen 2')),
@@ -26,7 +24,6 @@ class OnboardingScreen extends StatelessWidget {
                       color: Colors.blue,
                       child: const Center(child: Text('Onboarding Screen 3')),
                     ),
-                    
                   ],
                 ),
               ],
