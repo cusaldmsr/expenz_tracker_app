@@ -166,12 +166,14 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const UserDataScreen(),
-                          ),
-                        );
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserDataScreen(),
+                            ),
+                          );
+                        }
                       },
 
                       child: CustomButton(text: "Next", color: kMainColor),
