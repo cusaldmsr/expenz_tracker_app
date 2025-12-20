@@ -2,6 +2,7 @@ import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/data/onboarding_data.dart';
 import 'package:expenz_tracker_app/screens/onboarding/front_page.dart';
 import 'package:expenz_tracker_app/screens/onboarding/sheared_onboarding_screen.dart';
+import 'package:expenz_tracker_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -56,6 +57,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     effect: const WormEffect(
                       activeDotColor: kMainColor,
                       dotColor: kLightGrey,
+                    ),
+                  ),
+                ),
+                // Navigation Buttons
+                Positioned(
+                  bottom: 30,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        _controller.animateToPage(
+                          (_controller.page!.toInt() + 1) % 4,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: CustomButton(text: "Next", color: kMainColor),
                     ),
                   ),
                 ),
