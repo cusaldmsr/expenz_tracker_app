@@ -1,11 +1,19 @@
+import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/data/onboarding_data.dart';
 import 'package:expenz_tracker_app/screens/onboarding/front_page.dart';
 import 'package:expenz_tracker_app/screens/onboarding/sheared_onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _controller = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +24,7 @@ class OnboardingScreen extends StatelessWidget {
               children: [
                 // Onboarding Screens
                 PageView(
+                  controller: _controller,
                   children: [
                     FrontPage(),
                     ShearedOnboardingScreen(
@@ -30,7 +39,25 @@ class OnboardingScreen extends StatelessWidget {
                           OnboardingData.onboardingDataList[1].description,
                       imagePath: OnboardingData.onboardingDataList[1].imagePath,
                     ),
+                    ShearedOnboardingScreen(
+                      title: OnboardingData.onboardingDataList[2].title,
+                      description:
+                          OnboardingData.onboardingDataList[2].description,
+                      imagePath: OnboardingData.onboardingDataList[2].imagePath,
+                    ),
                   ],
+                ),
+                // Smooth Indicator
+                Container(
+                  alignment: const Alignment(0, 0.55),
+                  child: SmoothPageIndicator(
+                    controller: _controller,
+                    count: 4,
+                    effect: const WormEffect(
+                      activeDotColor: kMainColor,
+                      dotColor: kLightGrey,
+                    ),
+                  ),
                 ),
               ],
             ),
