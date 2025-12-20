@@ -14,6 +14,16 @@ class _UserDataScreenState extends State<UserDataScreen> {
   //for the checkbox
   bool _rememberMe = false;
 
+  //form key for validation
+  final _formKey = GlobalKey<FormState>();
+
+  //controllers for text fields can be added here if needed
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
