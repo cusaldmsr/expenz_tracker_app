@@ -22,7 +22,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +42,17 @@ class _UserDataScreenState extends State<UserDataScreen> {
                 SizedBox(height: 30),
                 //Form
                 Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       TextFormField(
                         controller: _fullNameController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your full name';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Full Name',
                           labelStyle: TextStyle(color: kGrey),
@@ -56,6 +64,12 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: _emailController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your email address';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Email Address',
                           labelStyle: TextStyle(color: kGrey),
@@ -67,6 +81,12 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: _phoneController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your phone number';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
                           labelStyle: TextStyle(color: kGrey),
@@ -79,6 +99,12 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(color: kGrey),
@@ -91,6 +117,15 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       TextFormField(
                         controller: _confirmPasswordController,
                         obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please confirm your password';
+                          }
+                          if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
                           labelStyle: TextStyle(color: kGrey),
