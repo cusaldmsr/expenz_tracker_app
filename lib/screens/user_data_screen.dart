@@ -28,6 +28,21 @@ class _UserDataScreenState extends State<UserDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Move persistent action to bottomNavigationBar instead of using Positioned in a Column
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+        child: GestureDetector(
+          onTap: () {
+            if (_formKey.currentState!.validate()) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UserDataScreen()),
+              );
+            }
+          },
+          child: CustomButton(text: "Next", color: kMainColor),
+        ),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -147,7 +162,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                               activeColor: kMainColor,
                               value: _rememberMe,
                               onChanged: (value) => setState(() {
-                                _rememberMe = true;
+                                _rememberMe = value!;
                               }),
                             ),
                           ),
@@ -155,29 +170,6 @@ class _UserDataScreenState extends State<UserDataScreen> {
                       ),
                       SizedBox(height: 210),
                     ],
-                  ),
-                ),
-                // Navigation Buttons
-                Positioned(
-                  bottom: 30,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const UserDataScreen(),
-                            ),
-                          );
-                        }
-                      },
-
-                      child: CustomButton(text: "Next", color: kMainColor),
-                    ),
                   ),
                 ),
               ],
