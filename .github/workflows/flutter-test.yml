@@ -33,7 +33,7 @@ jobs:
             exit 1
           else
             echo "All tests passed."
-            fi
+          fi
       - name: Check for Warnings
         run: |
           if grep -q 'WARNING' test-results/results.json; then
