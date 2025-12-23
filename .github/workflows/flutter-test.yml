@@ -94,7 +94,7 @@ jobs:
   test_print_output_x64:
     runs-on: ubuntu-latest
 
-    # These calls to setup.sh sepcify the -t flag, which enables test mode.
+    # These calls to setup.sh specify the -t flag, which enables test mode.
     # Test mode uses hardcoded Flutter release manifests from test/ directory.
 
     steps:
