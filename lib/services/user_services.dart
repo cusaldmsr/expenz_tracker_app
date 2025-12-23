@@ -11,6 +11,7 @@ class UserServices {
     String confirmPassword,
     BuildContext context,
   ) async {
+    final BuildContext context = await Future.value(context);
     // Implementation for fetching user data
     if (password != confirmPassword) {
       ScaffoldMessenger.of(
