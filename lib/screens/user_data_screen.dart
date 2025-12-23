@@ -53,14 +53,20 @@ class _UserDataScreenState extends State<UserDataScreen> {
               );
 
               // Navigate to the next screen or perform other actions after successful storage
+              // if (context.mounted) {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) {
+              //         return MainScreen();
+              //       },
+              //     ),
+              //   );
+              // }
               if (context.mounted) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
+                  MaterialPageRoute(builder: (_) => const MainScreen()),
                 );
               }
             }
