@@ -49,29 +49,6 @@ jobs:
           channel: ${{ matrix.channel }}
           dry-run: ${{ matrix.dry-run }}
           git-source: ${{ matrix.git-source }}
-      - name: Echo outputs
-        run: |
-          echo RUNNER-OS=${{ runner.os }}
-          echo RUNNER-ARCH=${{ runner.arch }}
-
-          echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
-          echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
-          echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
-          echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
-          echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
-        shell: bash
-      - run: dart --version
-        if: ${{ matrix.dry-run != true }}
-        shell: bash
-      - run: flutter --version
-        if: ${{ matrix.dry-run != true }}
-        shell: bash
-      - run: "! dart --version"
-        if: ${{ matrix.dry-run == true }}
-        shell: bash
-      - run: "! flutter --version"
-        if: ${{ matrix.dry-run == true }}
-        shell: bash
 
   test_cache:
     runs-on: ${{ matrix.operating-system }}
@@ -283,3 +260,4 @@ jobs:
         shell: bash
       - run: ./setup.sh -t -p -l '/tmp/flutter/:channel:-:version:-:hash:-pub-cache-key' | grep '/tmp/flutter/stable-3.7.7-2ad6cd72c040113b47ee9055e722606a490ef0da-pub-cache-key'
         shell: bash
+
