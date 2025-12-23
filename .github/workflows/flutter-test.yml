@@ -35,6 +35,7 @@ jobs:
             echo "All tests passed."
           fi
       - name: Check for Warnings
+        if: always()
         run: |
           if grep -q 'WARNING' test-results/results.json; then
             echo "Warnings found in test results."
