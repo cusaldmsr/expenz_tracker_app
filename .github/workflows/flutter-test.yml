@@ -43,13 +43,13 @@ jobs:
           else
             echo "No warnings found."
           fi
-      - name: Clean up
-        run: rm -rf test-results
       - name: Summary
         if: always()
         run: |
           echo "Test Summary:"
           grep -E '"name":|"result":' test-results/results.json || echo "No test results found."
+      - name: Clean up
+        run: rm -rf test-results
       - name: Notify on Failure
         if: failure()
         run: echo "Tests failed! Please check the test results artifact for details."
