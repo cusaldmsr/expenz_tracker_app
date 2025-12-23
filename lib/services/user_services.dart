@@ -27,11 +27,15 @@ class UserService {
       await prefs.setString('email', email);
       await prefs.setString('phoneNumber', phoneNumber);
       await prefs.setString('password', password);
+
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("User Details stored successfully")),
       );
     } catch (e) {
-      print(e.toString());
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error storing user details: $e")));
     }
   }
 
