@@ -1,5 +1,7 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/constants/constants.dart';
+import 'package:expenz_tracker_app/screens/onboarding/main_screen.dart';
+import 'package:expenz_tracker_app/services/user_services.dart';
 import 'package:expenz_tracker_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -32,12 +34,35 @@ class _UserDataScreenState extends State<UserDataScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
         child: GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (_formKey.currentState!.validate()) {
-              Navigator.push(
+              String fullName = _fullNameController.text;
+              String email = _emailController.text;
+              String phoneNumber = _phoneController.text;
+              String password = _passwordController.text;
+              String confirmPassword = _confirmPasswordController.text;
+
+              // Proceed with storing user details
+              await UserServices.storeUserDetails(
+                fullName,
+                email,
+                phoneNumber,
+                password,
+                confirmPassword,
                 context,
-                MaterialPageRoute(builder: (context) => const UserDataScreen()),
               );
+
+              // Navigate to the next screen or perform other actions after successful storage
+              if (context.mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MainScreen();
+                    },
+                  ),
+                );
+              }
             }
           },
           child: CustomButton(text: "Next", color: kMainColor),
