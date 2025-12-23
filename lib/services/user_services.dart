@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserService {
   //Store the userName and password using shared preferences
-  static Future<void> storeUserDetails(String fullname, String email,
-      String password, String confirmPassword, String phoneNumber, BuildContext context) async {
+  static Future<void> storeUserDetails(
+    String fullname,
+    String email,
+    String password,
+    String confirmPassword,
+    String phoneNumber,
+    BuildContext context,
+  ) async {
     //check if the password and confirm password are the same
     if (password != confirmPassword) {
       //show a snackbar with the error message
@@ -23,9 +28,7 @@ class UserService {
       await prefs.setString('phoneNumber', phoneNumber);
       await prefs.setString('password', password);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("User Details stored successfully"),
-        ),
+        const SnackBar(content: Text("User Details stored successfully")),
       );
     } catch (e) {
       print(e.toString());
