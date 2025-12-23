@@ -43,7 +43,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
               String confirmPassword = _confirmPasswordController.text;
 
               // Proceed with storing user details
-              await UserServices.storeUserDetails(
+              await UserService.storeUserDetails(
                 fullName,
                 email,
                 phoneNumber,
