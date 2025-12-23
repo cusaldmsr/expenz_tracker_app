@@ -1,0 +1,58 @@
+name: Flutter Test
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+      - run: flutter pub get
+      - name: Generate Test Results
+        run: |
+          mkdir -p test-results
+          flutter test --machine | tee test-results/results.json
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+      - name: Display Test Results
+        if: always()
+        run: |
+          echo "Test Results:"
+          cat test-results/results.json
+      - name: Fail if tests failed
+        if: always()
+        run: |
+          if grep -q '"result":"failure"' test-results/results.json; then
+            echo "Some tests failed."
+            exit 1
+          else
+            echo "All tests passed."
+          fi
+      - name: Check for Warnings
+        if: always()
+        run: |
+          if grep -q 'WARNING' test-results/results.json; then
+            echo "Warnings found in test results."
+            exit 1
+          else
+            echo "No warnings found."
+          fi
+      - name: Summary
+        if: always()
+        run: |
+          echo "Test Summary:"
+          grep -E '"name":|"result":' test-results/results.json || echo "No test results found."
+      - name: Clean up
+        run: rm -rf test-results
+      - name: Notify on Failure
+        if: failure()
+        run: echo "Tests failed! Please check the test results artifact for details."
+      - name: Notify on Success
+        if: success()
+        run: echo "All tests passed successfully!"
