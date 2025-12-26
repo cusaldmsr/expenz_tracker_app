@@ -1,5 +1,3 @@
-import 'package:expenz_tracker_app/screens/onboarding/main_screen.dart';
-import 'package:expenz_tracker_app/screens/onboarding_screen.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
 import 'package:expenz_tracker_app/widgets/wrapper.dart';
 import 'package:flutter/material.dart';
