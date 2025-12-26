@@ -60,4 +60,11 @@ class UserService {
     await prefs.remove('username');
     await prefs.remove('email');
   }
+
+  //method to check whether the fullname is stored in shared preferences
+  static Future<bool> checkFullname() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? fullname = prefs.getString('fullname');
+    return fullname != null;
+  }
 }
