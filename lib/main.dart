@@ -25,15 +25,13 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Expenz Tracker',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
+            theme: ThemeData(primarySwatch: Colors.blue),
             home: isFullnameStored
                 ? const OnboardingScreen()
                 : const OnboardingScreen(),
           );
         }
       },
-      );
+    );
   }
 }
