@@ -10,10 +10,6 @@ class AddNewScreen extends StatefulWidget {
 class _AddNewScreenState extends State<AddNewScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Screen'),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: const Text('Add New Screen')));
   }
 }

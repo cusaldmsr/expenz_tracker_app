@@ -10,10 +10,6 @@ class TransactionsScreen extends StatefulWidget {
 class _TransactionsScreenState extends State<TransactionsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Transactions Screen'),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: const Text('Transactions Screen')));
   }
 }
