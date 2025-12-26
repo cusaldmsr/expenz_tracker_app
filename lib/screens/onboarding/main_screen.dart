@@ -1,4 +1,9 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
+import 'package:expenz_tracker_app/screens/add_new_screen.dart';
+import 'package:expenz_tracker_app/screens/budget_screen.dart';
+import 'package:expenz_tracker_app/screens/home_screen.dart';
+import 'package:expenz_tracker_app/screens/profile_screen.dart';
+import 'package:expenz_tracker_app/screens/transactions_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -9,8 +14,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  //current index of bottom navigation bar
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    //Screen list
+    final List<Widget> _screens = [
+      const HomeScreen(),
+      const TransactionsScreen(),
+      const AddNewScreen(),
+      const BudgetScreen(),
+      const ProfileScreen(),
+    ];
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -18,6 +35,12 @@ class _MainScreenState extends State<MainScreen> {
         unselectedItemColor: kGrey,
         showUnselectedLabels: true,
         backgroundColor: kWhite,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         selectedLabelStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -43,6 +66,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
+      body: _screens[_currentIndex],
     );
   }
 }
