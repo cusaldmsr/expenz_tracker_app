@@ -1,5 +1,7 @@
+import 'package:expenz_tracker_app/screens/onboarding/main_screen.dart';
 import 'package:expenz_tracker_app/screens/onboarding_screen.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
+import 'package:expenz_tracker_app/widgets/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,10 +27,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Expenz Tracker',
-            theme: ThemeData(primarySwatch: Colors.blue),
-            home: isFullnameStored
-                ? const OnboardingScreen()
-                : const OnboardingScreen(),
+            theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Inter'),
+            home: Wrapper(showMainScreen: isFullnameStored),
           );
         }
       },
