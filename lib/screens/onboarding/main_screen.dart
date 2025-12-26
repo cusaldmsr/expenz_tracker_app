@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     //Screen list
-    final List<Widget> _screens = [
+    final List<Widget> screens = [
       const HomeScreen(),
       const TransactionsScreen(),
       const AddNewScreen(),
@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
-      body: _screens[_currentIndex],
+      body: screens[_currentIndex],
     );
   }
 }
