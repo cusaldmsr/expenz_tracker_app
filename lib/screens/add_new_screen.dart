@@ -1,6 +1,7 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/constants/constants.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
+import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,19 @@ class AddNewScreen extends StatefulWidget {
 
 class _AddNewScreenState extends State<AddNewScreen> {
   int _selectedMethod = 0;
+  ExpensCategory _expensCategory = ExpensCategory.food;
+  IncomeCategory _incomeCategory = IncomeCategory.salary;
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +149,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                 ),
                 padding: const EdgeInsets.all(kDefaultPadding),
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.65,
                 decoration: BoxDecoration(
                   color: kWhite,
                   borderRadius: BorderRadius.only(
@@ -142,25 +157,92 @@ class _AddNewScreenState extends State<AddNewScreen> {
                     topRight: Radius.circular(30),
                   ),
                 ),
-                child: Form(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //Category selector dropdown
-                      DropdownButtonFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Select Category',
-                          border: InputBorder.none,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //Category selector dropdown
+                        DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Select Category',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 0,
+                              vertical: 10,
+                            ),
+                          ),
+                          items: _selectedMethod == 0
+                              ? ExpensCategory.values.map((category) {
+                                  return DropdownMenuItem(
+                                    value: category,
+                                    child: Text(describeEnum(category)),
+                                  );
+                                }).toList()
+                              : IncomeCategory.values.map((category) {
+                                  return DropdownMenuItem(
+                                    value: category,
+                                    child: Text(describeEnum(category)),
+                                  );
+                                }).toList(),
+                          value: _selectedMethod == 0
+                              ? _expensCategory
+                              : _incomeCategory,
+                          onChanged: (value) {
+                            setState(() {
+                              if (_selectedMethod == 0) {
+                                _expensCategory = value as ExpensCategory;
+                              } else {
+                                _incomeCategory = value as IncomeCategory;
+                              }
+                            });
+                          },
                         ),
-                        items: ExpensCategory.values.map((category) {
-                          return DropdownMenuItem(
-                            value: category,
-                            child: Text(describeEnum(category)),
-                          );
-                        }).toList(),
-                        onChanged: (value) {},
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+                        //Title TextField
+                        TextFormField(
+                          controller: _titleController,
+                          decoration: InputDecoration(
+                            labelText: 'Title',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        //Description TextField
+                        TextFormField(
+                          controller: _descriptionController,
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        //Amount TextField
+                        TextFormField(
+                          controller: _amountController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Amount',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        //Submit Button
+                        ElevatedButton(
+                          onPressed: () {
+                            // Handle form submission
+                          },
+                          child: const Text('Submit'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
