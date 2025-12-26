@@ -42,22 +42,15 @@ class UserService {
   //Get the username and email from shared preferences
   static Future<Map<String, String>> getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? username = prefs.getString('username');
+    String? fullname = prefs.getString('fullname');
     String? email = prefs.getString('email');
-    return {'username': username!, 'email': email!};
-  }
-
-  //Check if the username is stored in shared preferences
-  static Future<bool> checkUsername() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? username = prefs.getString('username');
-    return username != null;
+    return {'fullname': fullname!, 'email': email!};
   }
 
   //remove the username and email from shared preferences
   static Future<void> clearUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
+    await prefs.remove('fullname');
     await prefs.remove('email');
   }
 
