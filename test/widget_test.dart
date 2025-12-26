@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Use in-memory SharedPreferences for tests
-    SharedPreferences.setMockInitialValues(<String, Object?>{});
+    SharedPreferences.setMockInitialValues(<String, Object>{});
 
     await tester.pumpWidget(const MyApp());
 
