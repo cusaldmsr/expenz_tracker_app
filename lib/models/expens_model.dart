@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ExpensCategory {
-  food,
-  transport,
-  shopping,
-  health,
-  subscriptions,
-}
+enum ExpensCategory { food, transport, shopping, health, subscriptions }
 
 //category images
 final Map<ExpensCategory, String> expensCategoryImages = {

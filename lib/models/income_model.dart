@@ -7,7 +7,7 @@ final Map<IncomeCategory, String> incomeCategoryImages = {
   IncomeCategory.freelance: 'assets/images/freelance.png',
   IncomeCategory.salary: 'assets/images/health.png',
   IncomeCategory.passiveIncome: 'assets/images/car.png',
-  IncomeCategory.sales:  'assets/images/salary.png',
+  IncomeCategory.sales: 'assets/images/salary.png',
 };
 
 //category colors
