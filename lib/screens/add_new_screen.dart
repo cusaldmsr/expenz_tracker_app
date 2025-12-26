@@ -15,6 +15,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _selectedMethod == 0 ? kRed : kGreen,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -25,7 +26,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
-                    color: kLightGrey,
+                    color: kWhite,
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Row(
@@ -39,9 +40,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _selectedMethod == 0
-                                ? kMainColor
-                                : kLightGrey,
+                            color: _selectedMethod == 0 ? kMainColor : kWhite,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Padding(
@@ -67,9 +66,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _selectedMethod == 1
-                                ? kMainColor
-                                : kLightGrey,
+                            color: _selectedMethod == 1 ? kMainColor : kWhite,
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Padding(
@@ -88,6 +85,44 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kDefaultPadding,
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: kDefaultPadding * 6),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'How Much?',
+                          style: TextStyle(
+                            color: kLightGrey.withOpacity(0.8),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold,
+                            color: kWhite,
+                          ),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '0',
+                            hintStyle: TextStyle(
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold,
+                              color: kWhite,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
