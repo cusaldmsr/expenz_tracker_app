@@ -51,4 +51,17 @@ class ExpensModel {
       'description': description,
     };
   }
+
+  //Create an ExpensModel from a JSON object
+  factory ExpensModel.fromJson(Map<String, dynamic> json) {
+    return ExpensModel(
+      id: json['id'],
+      title: json['title'],
+      category: ExpensCategory.values[json['category']],
+      amount: json['amount'],
+      date: DateTime.parse(json['date']),
+      time: DateTime.parse(json['time']),
+      description: json['description'],
+    );
+  }
 }
