@@ -38,4 +38,17 @@ class ExpensModel {
     required this.time,
     required this.description,
   });
+
+  //Convert the expensModel to a JSON object
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'category': category.index,
+      'amount': amount,
+      'date': date.toIso8601String(),
+      'time': time.toIso8601String(),
+      'description': description,
+    };
+  }
 }
