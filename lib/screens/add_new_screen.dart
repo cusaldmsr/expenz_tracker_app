@@ -20,6 +20,9 @@ class _AddNewScreenState extends State<AddNewScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+
   @override
   void dispose() {
     _amountController.dispose();
@@ -233,7 +236,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 30),
 
                         //Date Picker
                         Row(
@@ -245,7 +248,13 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2100),
                                   initialDate: DateTime.now(),
-                                );
+                                ).then((pickedDate) {
+                                  if (pickedDate != null) {
+                                    setState(() {
+                                      _selectedDate = pickedDate;
+                                    });
+                                  }
+                                });
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -278,7 +287,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                             Spacer(),
                             Text(
-                              'Dec 28 Sunday, 2025',
+                              '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
                               style: TextStyle(color: kGrey, fontSize: 16),
                             ),
                           ],
@@ -292,7 +301,13 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay.now(),
-                                );
+                                ).then((pickedTime) {
+                                  if (pickedTime != null) {
+                                    setState(() {
+                                      _selectedTime = pickedTime;
+                                    });
+                                  }
+                                });
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -325,7 +340,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                             Spacer(),
                             Text(
-                              '10:30 AM',
+                              '${_selectedTime.hour}:${_selectedTime.minute}${_selectedTime.period == DayPeriod.am ? ' AM' : ' PM'}',
                               style: TextStyle(color: kGrey, fontSize: 16),
                             ),
                           ],
