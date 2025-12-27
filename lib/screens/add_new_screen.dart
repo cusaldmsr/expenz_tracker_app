@@ -145,7 +145,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
               //user data form
               Container(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.35,
+                  top: MediaQuery.of(context).size.height * 0.25,
                 ),
                 padding: const EdgeInsets.all(kDefaultPadding),
                 width: double.infinity,
@@ -199,7 +199,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             });
                           },
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         //Title TextField
                         TextFormField(
                           controller: _titleController,
@@ -210,7 +210,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         //Description TextField
                         TextFormField(
                           controller: _descriptionController,
@@ -221,7 +221,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         //Amount TextField
                         TextFormField(
                           controller: _amountController,
@@ -233,13 +233,121 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
+
+                        //Date Picker
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: kMainColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                  vertical: 4.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // Implement date picker functionality
+                                      },
+                                      icon: const Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'Select Date',
+                                      style: TextStyle(
+                                        color: kWhite,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              'Dec 28 Sunday, 2025',
+                              style: TextStyle(color: kGrey, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: kYellow,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                  vertical: 4.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // Implement date picker functionality
+                                      },
+                                      icon: const Icon(
+                                        Icons.access_time_outlined,
+                                        color: kWhite,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'Select Time',
+                                      style: TextStyle(
+                                        color: kWhite,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '10:30 AM',
+                              style: TextStyle(color: kGrey, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        Divider(height: 40, color: kGrey.withOpacity(0.5)),
                         //Submit Button
-                        ElevatedButton(
-                          onPressed: () {
-                            // Handle form submission
-                          },
-                          child: const Text('Submit'),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _selectedMethod == 0
+                                  ? kRed
+                                  : kGreen,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                            onPressed: () {
+                              // Implement submit functionality
+                            },
+                            child: const Text(
+                              'Add Now',
+                              style: TextStyle(
+                                color: kWhite,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
