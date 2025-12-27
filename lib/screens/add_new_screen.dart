@@ -4,6 +4,7 @@ import 'package:expenz_tracker_app/models/expens_model.dart';
 import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
   const AddNewScreen({super.key});
@@ -21,7 +22,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
   final TextEditingController _descriptionController = TextEditingController();
 
   DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  DateTime _selectedTime = DateTime.now();
 
   @override
   void dispose() {
@@ -287,7 +288,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                             Spacer(),
                             Text(
-                              '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+                              DateFormat().add_yMMMEd().format(_selectedDate),
                               style: TextStyle(color: kGrey, fontSize: 16),
                             ),
                           ],
@@ -301,10 +302,16 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay.now(),
-                                ).then((pickedTime) {
-                                  if (pickedTime != null) {
+                                ).then((value) {
+                                  if (value != null) {
                                     setState(() {
-                                      _selectedTime = pickedTime;
+                                      _selectedTime = DateTime(
+                                        _selectedDate.year,
+                                        _selectedDate.month,
+                                        _selectedDate.day,
+                                        value.hour,
+                                        value.minute,
+                                      );
                                     });
                                   }
                                 });
@@ -340,7 +347,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             ),
                             Spacer(),
                             Text(
-                              '${_selectedTime.hour}:${_selectedTime.minute}${_selectedTime.period == DayPeriod.am ? ' AM' : ' PM'}',
+                              DateFormat.jm().format(_selectedTime),
+
                               style: TextStyle(color: kGrey, fontSize: 16),
                             ),
                           ],
