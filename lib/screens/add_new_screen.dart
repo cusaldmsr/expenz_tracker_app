@@ -238,36 +238,41 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         //Date Picker
                         Row(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: kMainColor,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                  vertical: 4.0,
+                            GestureDetector(
+                              onTap: () {
+                                showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2100),
+                                  initialDate: DateTime.now(),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: kMainColor,
                                 ),
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // Implement date picker functionality
-                                      },
-                                      icon: const Icon(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                    vertical: 12.0,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
                                         Icons.calendar_month_outlined,
                                         color: kWhite,
                                       ),
-                                    ),
-                                    const Text(
-                                      'Select Date',
-                                      style: TextStyle(
-                                        color: kWhite,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
+                                      const Text(
+                                        'Select Date',
+                                        style: TextStyle(
+                                          color: kWhite,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -282,36 +287,39 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                         Row(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: kYellow,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                  vertical: 4.0,
+                            GestureDetector(
+                              onTap: () {
+                                showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: kYellow,
                                 ),
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // Implement date picker functionality
-                                      },
-                                      icon: const Icon(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0,
+                                    vertical: 12.0,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
                                         Icons.access_time_outlined,
                                         color: kWhite,
                                       ),
-                                    ),
-                                    const Text(
-                                      'Select Time',
-                                      style: TextStyle(
-                                        color: kWhite,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
+                                      const Text(
+                                        'Select Time',
+                                        style: TextStyle(
+                                          color: kWhite,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
