@@ -348,7 +348,6 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             Spacer(),
                             Text(
                               DateFormat.jm().format(_selectedTime),
-
                               style: TextStyle(color: kGrey, fontSize: 16),
                             ),
                           ],
