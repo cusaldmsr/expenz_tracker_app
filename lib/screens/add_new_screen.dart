@@ -358,9 +358,14 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         SizedBox(
                           width: double.infinity,
                           height: 50,
-                          child: CustomButton(
-                            text: 'Add Now',
-                            color: _selectedMethod == 0 ? kRed : kGreen,
+                          child: GestureDetector(
+                            onTap: () {
+                              //save the expense/income data
+                            },
+                            child: CustomButton(
+                              text: 'Add Now',
+                              color: _selectedMethod == 0 ? kRed : kGreen,
+                            ),
                           ),
                         ),
                       ],
