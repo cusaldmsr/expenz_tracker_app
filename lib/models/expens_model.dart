@@ -38,4 +38,30 @@ class ExpensModel {
     required this.time,
     required this.description,
   });
+
+  //Convert the expensModel to a JSON object
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'category': category.index,
+      'amount': amount,
+      'date': date.toIso8601String(),
+      'time': time.toIso8601String(),
+      'description': description,
+    };
+  }
+
+  //Create an ExpensModel from a JSON object
+  factory ExpensModel.fromJson(Map<String, dynamic> json) {
+    return ExpensModel(
+      id: json['id'],
+      title: json['title'],
+      category: ExpensCategory.values[json['category']],
+      amount: json['amount'],
+      date: DateTime.parse(json['date']),
+      time: DateTime.parse(json['time']),
+      description: json['description'],
+    );
+  }
 }
