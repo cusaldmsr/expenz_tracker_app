@@ -34,14 +34,16 @@ class ExpenseServices {
       await prefs.setStringList(_expenseKey, expenseJsonList);
 
       //show a success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Expense saved successfully!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Expense saved successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
     } catch (e) {
-      print('Error saving expense: $e');
+      debugPrint('Error saving expense: $e');
     }
   }
 }
