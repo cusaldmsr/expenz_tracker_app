@@ -2,6 +2,7 @@ import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/constants/constants.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
 import 'package:expenz_tracker_app/models/income_model.dart';
+import 'package:expenz_tracker_app/widgets/custom_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -357,25 +358,13 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         SizedBox(
                           width: double.infinity,
                           height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: _selectedMethod == 0
-                                  ? kRed
-                                  : kGreen,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Implement submit functionality
+                          child: GestureDetector(
+                            onTap: () {
+                              //save the expense/income data
                             },
-                            child: const Text(
-                              'Add Now',
-                              style: TextStyle(
-                                color: kWhite,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            child: CustomButton(
+                              text: 'Add Now',
+                              color: _selectedMethod == 0 ? kRed : kGreen,
                             ),
                           ),
                         ),
