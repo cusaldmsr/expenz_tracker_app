@@ -54,4 +54,25 @@ class ExpenseServices {
       debugPrint('Error saving expense: $e');
     }
   }
+
+  //Fetch all expenses from shared preferences
+  Future<List<ExpensModel>> fetchExpenses() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String>? expenseJsonList = prefs.getStringList(_expenseKey);
+
+      if (expenseJsonList != null) {
+        expensesList = expenseJsonList
+            .map((e) => ExpensModel.fromJson(json.decode(e)))
+            .toList();
+      } else {
+        expensesList = [];
+      }
+      
+    } catch (e) {
+      debugPrint('Error fetching expenses: $e');
+      expensesList = [];
+    }
+    return expensesList;
+  } 
 }
