@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
-
   final Function(ExpensModel) onAddExpense;
   const AddNewScreen({super.key, required this.onAddExpense});
 
@@ -181,7 +180,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                               vertical: 10,
                             ),
                           ),
-                          items: _selectedMethod == 0
+                          items: _selectedMethod == 1
                               ? ExpensCategory.values.map((category) {
                                   return DropdownMenuItem(
                                     value: category,
@@ -194,7 +193,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                     child: Text(describeEnum(category)),
                                   );
                                 }).toList(),
-                          value: _selectedMethod == 0
+                          value: _selectedMethod == 1
                               ? _expensCategory
                               : _incomeCategory,
                           onChanged: (value) {
@@ -362,23 +361,30 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           width: double.infinity,
                           height: 50,
                           child: GestureDetector(
-                            onTap: () async{
-                              //save the expense/income data into shared preferences
-                              List<ExpensModel> existingExpenses = await ExpenseServices().fetchExpenses();
-                              
-                              //create a new expense to add
-                              ExpensModel newExpense = ExpensModel(
-                                id: existingExpenses.isNotEmpty ? existingExpenses.last.id + 1 : 1,
-                                title: _titleController.text,
-                                category: _expensCategory,
-                                amount: _amountController.text.isEmpty ? 0.0 : double.parse(_amountController.text),
-                                date: _selectedDate,
-                                time: _selectedTime,
-                                description: _descriptionController.text,
-                              );
+                            onTap: () async {
+                              if (_selectedMethod == 1) {
+                                //save the expense/income data into shared preferences
+                                List<ExpensModel> existingExpenses =
+                                    await ExpenseServices().fetchExpenses();
 
-                              //call the onAddExpense callback to add the new expense
-                              widget.onAddExpense(newExpense);
+                                //create a new expense to add
+                                ExpensModel newExpense = ExpensModel(
+                                  id: existingExpenses.isNotEmpty
+                                      ? existingExpenses.last.id + 1
+                                      : 1,
+                                  title: _titleController.text,
+                                  category: _expensCategory,
+                                  amount: _amountController.text.isEmpty
+                                      ? 0.0
+                                      : double.parse(_amountController.text),
+                                  date: _selectedDate,
+                                  time: _selectedTime,
+                                  description: _descriptionController.text,
+                                );
+
+                                //call the onAddExpense callback to add the new expense
+                                widget.onAddExpense(newExpense);
+                              }
                             },
                             child: CustomButton(
                               text: 'Add Now',
