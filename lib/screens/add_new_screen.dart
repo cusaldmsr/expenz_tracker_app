@@ -38,7 +38,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _selectedMethod == 0 ? kRed : kGreen,
+      backgroundColor: _selectedMethod == 1 ? kRed : kGreen,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -376,7 +376,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                   category: _expensCategory,
                                   amount: _amountController.text.isEmpty
                                       ? 0.0
-                                      : double.parse(_amountController.text),
+                                      : (double.tryParse(
+                                              _amountController.text,
+                                            ) ??
+                                            0.0),
                                   date: _selectedDate,
                                   time: _selectedTime,
                                   description: _descriptionController.text,
@@ -388,7 +391,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                             },
                             child: CustomButton(
                               text: 'Add Now',
-                              color: _selectedMethod == 0 ? kRed : kGreen,
+                              color: _selectedMethod == 1 ? kRed : kGreen,
                             ),
                           ),
                         ),
