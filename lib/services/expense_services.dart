@@ -43,7 +43,35 @@ class ExpenseServices {
         );
       }
     } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save expense'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
       debugPrint('Error saving expense: $e');
     }
+  }
+
+  //Fetch all expenses from shared preferences
+  Future<List<ExpensModel>> fetchExpenses() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String>? expenseJsonList = prefs.getStringList(_expenseKey);
+
+      if (expenseJsonList != null) {
+        expensesList = expenseJsonList
+            .map((e) => ExpensModel.fromJson(json.decode(e)))
+            .toList();
+      } else {
+        expensesList = [];
+      }
+    } catch (e) {
+      debugPrint('Error fetching expenses: $e');
+      expensesList = [];
+    }
+    return expensesList;
   }
 }
