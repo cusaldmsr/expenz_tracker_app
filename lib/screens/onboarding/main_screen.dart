@@ -27,6 +27,15 @@ class _MainScreenState extends State<MainScreen> {
     List<ExpensModel> fetchedExpenses = await ExpenseServices().fetchExpenses();
     setState(() {
       expensesList = fetchedExpenses;
+      debugPrint('Fetched Expenses: ${expensesList.length}');
+    });
+  }
+
+  //Function to add new expense to the list
+  void _addNewExpense(ExpensModel expense) {
+    ExpenseServices().saveExpense(expense, context);
+    setState(() {
+      expensesList.add(expense);
     });
   }
 
@@ -44,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> screens = [
       const HomeScreen(),
       const TransactionsScreen(),
-      AddNewScreen(onAddExpense: (p0) {}),
+      AddNewScreen(onAddExpense: _addNewExpense),
       const BudgetScreen(),
       const ProfileScreen(),
     ];
