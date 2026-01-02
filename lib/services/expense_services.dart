@@ -68,11 +68,10 @@ class ExpenseServices {
       } else {
         expensesList = [];
       }
-      
     } catch (e) {
       debugPrint('Error fetching expenses: $e');
       expensesList = [];
     }
     return expensesList;
-  } 
+  }
 }
