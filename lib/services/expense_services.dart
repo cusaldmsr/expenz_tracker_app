@@ -43,6 +43,14 @@ class ExpenseServices {
         );
       }
     } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save expense'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
       debugPrint('Error saving expense: $e');
     }
   }
