@@ -19,7 +19,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   //current index of bottom navigation bar
-  int _currentIndex = 2;
+  int _currentIndex = 1;
 
   List<ExpensModel> expensesList = [];
   List<IncomeModel> incomesList = [];
@@ -73,12 +73,33 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  //function to remove a expense from the list
+  void _removeExpense(ExpensModel expense) {
+    ExpenseServices().deleteExpense(expense.id, context);
+    setState(() {
+      expensesList.remove(expense);
+    });
+  }
+
+  //function to remove an income from the list
+  void _removeIncome(IncomeModel income) {
+    IncomeServices().deleteIncome(income.id, context);
+    setState(() {
+      incomesList.remove(income);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Screen list
     final List<Widget> screens = [
       const HomeScreen(),
-      const TransactionsScreen(),
+      TransactionsScreen(
+        expensesList: expensesList,
+        onDismissedExpenses: _removeExpense,
+        incomesList: incomesList,
+        onDismissedIncomes: _removeIncome,
+      ),
       AddNewScreen(onAddExpense: _addNewExpense, onAddIncome: _addNewIncome),
       const BudgetScreen(),
       const ProfileScreen(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum IncomeCategory { freelance, salary, passiveIncome, sales }
+enum IncomeCategory { freelance, salary, passiveIncome, sales, gift }
 
 //category images
 final Map<IncomeCategory, String> incomeCategoryImages = {
@@ -8,6 +8,7 @@ final Map<IncomeCategory, String> incomeCategoryImages = {
   IncomeCategory.salary: 'assets/images/health.png',
   IncomeCategory.passiveIncome: 'assets/images/car.png',
   IncomeCategory.sales: 'assets/images/salary.png',
+  IncomeCategory.gift: 'assets/images/gift.png',
 };
 
 //category colors
@@ -16,6 +17,7 @@ final Map<IncomeCategory, Color> incomeCategoryColors = {
   IncomeCategory.salary: Color.fromARGB(255, 30, 136, 229),
   IncomeCategory.passiveIncome: Color.fromARGB(255, 67, 160, 71),
   IncomeCategory.sales: Color.fromARGB(255, 223, 204, 33),
+  IncomeCategory.gift: Color.fromARGB(255, 156, 39, 176),
 };
 
 //category names
