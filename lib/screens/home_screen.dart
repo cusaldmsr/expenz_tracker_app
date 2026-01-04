@@ -1,6 +1,8 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
+import 'package:expenz_tracker_app/constants/constants.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
 import 'package:expenz_tracker_app/widgets/income_expenz_card.dart';
+import 'package:expenz_tracker_app/widgets/line_chart_sample.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -80,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Spacer(),
                           IconButton(
                             onPressed: () {
-                              // Add your onPressed code here!
+                              // Handle notification icon press
                             },
                             icon: Icon(
                               Icons.notifications_active,
@@ -111,6 +114,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              SizedBox(height: 10),
+
+              //line chart
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Spend Frequency',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    LineChartSample(),
+                  ],
                 ),
               ),
             ],
