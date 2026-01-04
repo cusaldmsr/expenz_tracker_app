@@ -423,6 +423,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                                 //call the onAddIncome callback to add the new income
                                 widget.onAddIncome(newIncome);
+                                //clear the form
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
                               }
                             },
                             child: CustomButton(
