@@ -387,6 +387,11 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                                 //call the onAddExpense callback to add the new expense
                                 widget.onAddExpense(newExpense);
+
+                                //clear the form
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
                               }
                             },
                             child: CustomButton(
