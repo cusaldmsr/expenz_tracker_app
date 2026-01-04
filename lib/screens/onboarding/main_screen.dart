@@ -75,8 +75,9 @@ class _MainScreenState extends State<MainScreen> {
 
   //function to remove a expense from the list
   void _removeExpense(ExpensModel expense) {
+    ExpenseServices().deleteExpense(expense.id, context);
     setState(() {
-      expensesList.removeWhere((item) => item.id == expense.id);
+      expensesList.remove(expense);
     });
   }
 
