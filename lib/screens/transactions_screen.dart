@@ -7,7 +7,13 @@ import 'package:expenz_tracker_app/widgets/income_card.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsScreen extends StatefulWidget {
-  const TransactionsScreen({super.key});
+  final List<ExpensModel> expensesList;
+  final void Function(ExpensModel) onDismissedExpenses;
+  const TransactionsScreen({
+    super.key,
+    required this.expensesList,
+    required this.onDismissedExpenses,
+  });
 
   @override
   State<TransactionsScreen> createState() => _TransactionsScreenState();
@@ -48,37 +54,28 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        ExpenseCard(
-                          title: 'Groceries',
-                          date: DateTime.now(),
-                          amount: 50.0,
-                          category: ExpensCategory.food,
-                          description: 'Bought groceries from the supermarket',
-                          createdAt: DateTime.now(),
-                        ),
-                        ExpenseCard(
-                          title: 'Transport',
-                          date: DateTime.now(),
-                          amount: 20.0,
-                          category: ExpensCategory.transport,
-                          description: 'Taxi fare',
-                          createdAt: DateTime.now(),
-                        ),
-                        ExpenseCard(
-                          title: 'Entertainment',
-                          date: DateTime.now(),
-                          amount: 30.0,
-                          category: ExpensCategory.shopping,
-                          description: 'Movie tickets',
-                          createdAt: DateTime.now(),
-                        ),
-                        ExpenseCard(
-                          title: 'Health',
-                          date: DateTime.now(),
-                          amount: 40.0,
-                          category: ExpensCategory.health,
-                          description: 'Pharmacy purchase',
-                          createdAt: DateTime.now(),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.expensesList.length,
+                          itemBuilder: (context, index) {
+                            final expens = widget.expensesList[index];
+                            return Dismissible(
+                              key: ValueKey(expens),
+                              direction: DismissDirection.startToEnd,
+                              onDismissed: (direction) {
+                                widget.onDismissedExpenses(expens);
+                              },
+                              child: ExpenseCard(
+                                title: expens.title,
+                                date: expens.date,
+                                amount: expens.amount,
+                                category: expens.category,
+                                description: expens.description,
+                                createdAt: expens.time,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
