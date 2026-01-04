@@ -1,6 +1,7 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseCard extends StatelessWidget {
   final String title;
@@ -73,13 +74,15 @@ class ExpenseCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14.0,
                     color: kGrey,
-                    overflow: TextOverflow.clip,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
             ),
           ),
+          SizedBox(width: 20.0),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 '- ' + '\$${amount.toStringAsFixed(2)}',
@@ -91,7 +94,7 @@ class ExpenseCard extends StatelessWidget {
               ),
               const SizedBox(height: 5.0),
               Text(
-                '${date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour)}:${date.minute.toString().padLeft(2, '0')} ${date.hour >= 12 ? 'PM' : 'AM'}',
+                DateFormat.jm().format(createdAt),
                 style: const TextStyle(fontSize: 12.0, color: kGrey),
               ),
             ],
