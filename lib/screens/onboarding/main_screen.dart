@@ -1,11 +1,13 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
+import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:expenz_tracker_app/screens/add_new_screen.dart';
 import 'package:expenz_tracker_app/screens/budget_screen.dart';
 import 'package:expenz_tracker_app/screens/home_screen.dart';
 import 'package:expenz_tracker_app/screens/profile_screen.dart';
 import 'package:expenz_tracker_app/screens/transactions_screen.dart';
 import 'package:expenz_tracker_app/services/expense_services.dart';
+import 'package:expenz_tracker_app/services/income_services.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 2;
 
   List<ExpensModel> expensesList = [];
+  List<IncomeModel> incomesList = [];
 
   //function to add new expense to the list
   void _fetchAllExpense() async {
@@ -31,11 +34,29 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  //function to add new income to the list
+  void _fetchAllIncome() async {
+    //Fetch all incomes from shared preferences
+    List<IncomeModel> fetchedIncomes = await IncomeServices().getIncomes();
+    setState(() {
+      incomesList = fetchedIncomes;
+      debugPrint('Fetched Incomes: ${incomesList.length}');
+    });
+  }
+
   //Function to add new expense to the list
   void _addNewExpense(ExpensModel expense) {
     ExpenseServices().saveExpense(expense, context);
     setState(() {
       expensesList.add(expense);
+    });
+  }
+
+  //Function to add new income to the list
+  void _addNewIncome(IncomeModel income) {
+    IncomeServices().saveIncome(income, context);
+    setState(() {
+      incomesList.add(income);
     });
   }
 
@@ -53,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> screens = [
       const HomeScreen(),
       const TransactionsScreen(),
-      AddNewScreen(onAddExpense: _addNewExpense),
+      AddNewScreen(onAddExpense: _addNewExpense, onAddIncome: _addNewIncome),
       const BudgetScreen(),
       const ProfileScreen(),
     ];
