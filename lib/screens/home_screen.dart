@@ -1,12 +1,26 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/constants/constants.dart';
+import 'package:expenz_tracker_app/models/expens_model.dart';
+import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
+import 'package:expenz_tracker_app/widgets/expense_card.dart';
+import 'package:expenz_tracker_app/widgets/income_card.dart';
 import 'package:expenz_tracker_app/widgets/income_expenz_card.dart';
 import 'package:expenz_tracker_app/widgets/line_chart_sample.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<ExpensModel> expensesList;
+  final List<IncomeModel> incomesList;
+  final void Function(ExpensModel) onDismissedExpenses;
+  final void Function(IncomeModel) onDismissedIncomes;
+  const HomeScreen({
+    super.key,
+    required this.expensesList,
+    required this.incomesList,
+    required this.onDismissedExpenses,
+    required this.onDismissedIncomes,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -133,6 +147,78 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 10),
                     LineChartSample(),
+
+                    //Recent Transactions
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Recent Transactions',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.expensesList.length,
+                                itemBuilder: (context, index) {
+                                  final expens = widget.expensesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(expens),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedExpenses(expens);
+                                      });
+                                    },
+                                    child: ExpenseCard(
+                                      title: expens.title,
+                                      date: expens.date,
+                                      amount: expens.amount,
+                                      category: expens.category,
+                                      description: expens.description,
+                                      createdAt: expens.time,
+                                    ),
+                                  );
+                                },
+                              ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.incomesList.length,
+                                itemBuilder: (context, index) {
+                                  final income = widget.incomesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(income),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedIncomes(income);
+                                      });
+                                    },
+                                    child: IncomeCard(
+                                      title: income.title,
+                                      date: income.date,
+                                      amount: income.amount,
+                                      category: income.category,
+                                      description: income.description,
+                                      createdAt: income.time,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
