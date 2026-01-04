@@ -85,7 +85,7 @@ class ExpenseCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '- ' + '\$${amount.toStringAsFixed(2)}',
+                '- \$${amount.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
