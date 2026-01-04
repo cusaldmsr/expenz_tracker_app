@@ -49,6 +49,8 @@ class _MainScreenState extends State<MainScreen> {
     ExpenseServices().saveExpense(expense, context);
     setState(() {
       expensesList.add(expense);
+      // ignore: avoid_print
+      print(expensesList.length);
     });
   }
 
@@ -57,6 +59,8 @@ class _MainScreenState extends State<MainScreen> {
     IncomeServices().saveIncome(income, context);
     setState(() {
       incomesList.add(income);
+      // ignore: avoid_print
+      print(incomesList.length);
     });
   }
 
