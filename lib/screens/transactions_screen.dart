@@ -8,11 +8,15 @@ import 'package:flutter/material.dart';
 
 class TransactionsScreen extends StatefulWidget {
   final List<ExpensModel> expensesList;
+  final List<IncomeModel> incomesList;
   final void Function(ExpensModel) onDismissedExpenses;
+  final void Function(IncomeModel) onDismissedIncomes;
   const TransactionsScreen({
     super.key,
     required this.expensesList,
     required this.onDismissedExpenses,
+    required this.incomesList,
+    required this.onDismissedIncomes,
   });
 
   @override
@@ -101,37 +105,30 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        IncomeCard(
-                          title: 'Salary',
-                          date: DateTime.now(),
-                          amount: 5000.0,
-                          category: IncomeCategory.salary,
-                          description: 'Monthly salary',
-                          createdAt: DateTime.now(),
-                        ),
-                        IncomeCard(
-                          title: 'Freelance',
-                          date: DateTime.now(),
-                          amount: 1500.0,
-                          category: IncomeCategory.freelance,
-                          description: 'Freelance project payment',
-                          createdAt: DateTime.now(),
-                        ),
-                        IncomeCard(
-                          title: 'Passive Income',
-                          date: DateTime.now(),
-                          amount: 2000.0,
-                          category: IncomeCategory.passiveIncome,
-                          description: 'Returns from investment',
-                          createdAt: DateTime.now(),
-                        ),
-                        IncomeCard(
-                          title: 'Gift',
-                          date: DateTime.now(),
-                          amount: 300.0,
-                          category: IncomeCategory.gift,
-                          description: 'Birthday gift from friend',
-                          createdAt: DateTime.now(),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.incomesList.length,
+                          itemBuilder: (context, index) {
+                            final income = widget.incomesList[index];
+                            return Dismissible(
+                              key: ValueKey(income),
+                              direction: DismissDirection.startToEnd,
+                              onDismissed: (direction) {
+                                setState(() {
+                                  widget.onDismissedIncomes(income);
+                                });
+                              },
+                              child: IncomeCard(
+                                title: income.title,
+                                date: income.date,
+                                amount: income.amount,
+                                category: income.category,
+                                description: income.description,
+                                createdAt: income.time,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
