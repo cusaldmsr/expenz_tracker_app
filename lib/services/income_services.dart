@@ -69,4 +69,3 @@ class IncomeServices {
     return loadedIncomes;
   }
 }
-
