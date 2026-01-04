@@ -420,6 +420,9 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                   time: _selectedTime,
                                   description: _descriptionController.text,
                                 );
+
+                                //call the onAddIncome callback to add the new income
+                                widget.onAddIncome(newIncome);
                               }
                             },
                             child: CustomButton(
