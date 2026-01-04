@@ -1,3 +1,4 @@
+import 'package:expenz_tracker_app/widgets/expense_card.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsScreen extends StatefulWidget {
@@ -10,6 +11,18 @@ class TransactionsScreen extends StatefulWidget {
 class _TransactionsScreenState extends State<TransactionsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Transactions Screen')));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Transactions Screen')),
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const ExpenseCard(),
+            const ExpenseCard(),
+            const ExpenseCard(),
+          ],
+        ),
+      ),
+    );
   }
 }
