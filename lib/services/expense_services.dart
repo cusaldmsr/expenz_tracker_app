@@ -76,7 +76,7 @@ class ExpenseServices {
   }
 
   //Delete an expense from shared preferences
-  Future<void> deleteExpense(ExpensModel expense, BuildContext context) async {
+  Future<void> deleteExpense(int id, BuildContext context) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       List<String>? existingExpenses = prefs.getStringList(_expenseKey);
@@ -87,13 +87,7 @@ class ExpenseServices {
             .toList();
 
         //Remove the expense from the list
-        existingExpenseObjects.removeWhere(
-          (e) =>
-              e.title == expense.title &&
-              e.amount == expense.amount &&
-              e.date == expense.date &&
-              e.category == expense.category,
-        );
+        existingExpenseObjects.removeWhere((e) => e.id == id);
 
         //Convert the updated list back to JSON strings
         List<String> updatedExpenseJsonList = existingExpenseObjects
