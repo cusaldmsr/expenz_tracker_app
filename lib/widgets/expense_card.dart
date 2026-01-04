@@ -70,15 +70,31 @@ class ExpenseCard extends StatelessWidget {
                 const SizedBox(height: 5.0),
                 Text(
                   description,
-                  style: const TextStyle(fontSize: 14.0, color: kGrey),
-                ),
-                const SizedBox(height: 5.0),
-                Text(
-                  'Date: ${date.day}/${date.month}/${date.year}',
-                  style: const TextStyle(fontSize: 12.0, color: kGrey),
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: kGrey,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
               ],
             ),
+          ),
+          Column(
+            children: [
+              Text(
+                '- ' + '\$${amount.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: kRed,
+                ),
+              ),
+              const SizedBox(height: 5.0),
+              Text(
+                '${date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour)}:${date.minute.toString().padLeft(2, '0')} ${date.hour >= 12 ? 'PM' : 'AM'}',
+                style: const TextStyle(fontSize: 12.0, color: kGrey),
+              ),
+            ],
           ),
         ],
       ),
