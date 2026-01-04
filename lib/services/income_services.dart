@@ -53,5 +53,20 @@ class IncomeServices {
       debugPrint('Error saving income: $e');
     }
   }
+
+  //Function to retrieve all income data from shared preferences
+  Future<List<IncomeModel>> getIncomes() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? incomeJsonList = prefs.getStringList(_incomeKey);
+
+    //Convert the existing incomes to a list of IncomeModel objects
+    List<IncomeModel> loadedIncomes = [];
+    if (incomeJsonList != null) {
+      loadedIncomes = incomeJsonList
+          .map((e) => IncomeModel.fromJson(json.decode(e)))
+          .toList();
+    }
+    return loadedIncomes;
+  }
 }
 
