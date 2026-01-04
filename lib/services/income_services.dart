@@ -69,7 +69,7 @@ class IncomeServices {
     return loadedIncomes;
   }
 
-   //Delete an income from shared preferences
+  //Delete an income from shared preferences
   Future<void> deleteIncome(int id, BuildContext context) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
