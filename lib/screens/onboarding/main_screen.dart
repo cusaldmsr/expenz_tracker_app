@@ -73,12 +73,22 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  //function to remove a expense from the list
+  void _removeExpense(ExpensModel expense) {
+    setState(() {
+      expensesList.removeWhere((item) => item.id == expense.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Screen list
     final List<Widget> screens = [
       const HomeScreen(),
-      const TransactionsScreen(),
+      TransactionsScreen(
+        expensesList: expensesList,
+        onDismissedExpenses: _removeExpense,
+      ),
       AddNewScreen(onAddExpense: _addNewExpense, onAddIncome: _addNewIncome),
       const BudgetScreen(),
       const ProfileScreen(),
