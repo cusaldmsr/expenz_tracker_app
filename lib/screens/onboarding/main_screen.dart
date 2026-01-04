@@ -65,6 +65,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     setState(() {
       _fetchAllExpense();
+      _fetchAllIncome();
     });
   }
 
