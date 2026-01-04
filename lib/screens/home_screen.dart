@@ -189,6 +189,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               ),
+                              widget.expensesList.isEmpty &&
+                                      widget.incomesList.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        'No transactions added yet!',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: kGrey,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
                               ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
