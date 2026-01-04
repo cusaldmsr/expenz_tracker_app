@@ -3,6 +3,7 @@ import 'package:expenz_tracker_app/constants/constants.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
 import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:expenz_tracker_app/services/expense_services.dart';
+import 'package:expenz_tracker_app/services/income_services.dart';
 import 'package:expenz_tracker_app/widgets/custom_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,13 @@ import 'package:intl/intl.dart';
 
 class AddNewScreen extends StatefulWidget {
   final Function(ExpensModel) onAddExpense;
-  const AddNewScreen({super.key, required this.onAddExpense});
+  final Function(IncomeModel) onAddIncome;
+
+  const AddNewScreen({
+    super.key,
+    required this.onAddExpense,
+    required this.onAddIncome,
+  });
 
   @override
   State<AddNewScreen> createState() => _AddNewScreenState();
@@ -38,7 +45,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _selectedMethod == 0 ? kRed : kGreen,
+      backgroundColor: _selectedMethod == 1 ? kRed : kGreen,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -376,7 +383,10 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                   category: _expensCategory,
                                   amount: _amountController.text.isEmpty
                                       ? 0.0
-                                      : double.parse(_amountController.text),
+                                      : (double.tryParse(
+                                              _amountController.text,
+                                            ) ??
+                                            0.0),
                                   date: _selectedDate,
                                   time: _selectedTime,
                                   description: _descriptionController.text,
@@ -384,11 +394,44 @@ class _AddNewScreenState extends State<AddNewScreen> {
 
                                 //call the onAddExpense callback to add the new expense
                                 widget.onAddExpense(newExpense);
+
+                                //clear the form
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
+                              } else {
+                                //load existing incomes
+                                List<IncomeModel> existingIncomes =
+                                    await IncomeServices().getIncomes();
+                                //create a new income to add
+                                IncomeModel newIncome = IncomeModel(
+                                  id: existingIncomes.isNotEmpty
+                                      ? existingIncomes.last.id + 1
+                                      : 1,
+                                  title: _titleController.text,
+                                  category: _incomeCategory,
+                                  amount: _amountController.text.isEmpty
+                                      ? 0.0
+                                      : (double.tryParse(
+                                              _amountController.text,
+                                            ) ??
+                                            0.0),
+                                  date: _selectedDate,
+                                  time: _selectedTime,
+                                  description: _descriptionController.text,
+                                );
+
+                                //call the onAddIncome callback to add the new income
+                                widget.onAddIncome(newIncome);
+                                //clear the form
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
                               }
                             },
                             child: CustomButton(
                               text: 'Add Now',
-                              color: _selectedMethod == 0 ? kRed : kGreen,
+                              color: _selectedMethod == 1 ? kRed : kGreen,
                             ),
                           ),
                         ),
