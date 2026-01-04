@@ -64,7 +64,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                               key: ValueKey(expens),
                               direction: DismissDirection.startToEnd,
                               onDismissed: (direction) {
-                                widget.onDismissedExpenses(expens);
+                                setState(() {
+                                  widget.onDismissedExpenses(expens);
+                                });
                               },
                               child: ExpenseCard(
                                 title: expens.title,
