@@ -108,6 +108,7 @@ class ExpenseServices {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Expense deleted successfully!'),
+              duration: Duration(seconds: 2),
               backgroundColor: Colors.green,
             ),
           );
@@ -118,6 +119,7 @@ class ExpenseServices {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to delete expense'),
+            duration: Duration(seconds: 2),
             backgroundColor: Colors.red,
           ),
         );
