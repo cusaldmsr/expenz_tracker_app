@@ -58,6 +58,14 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        widget.expensesList.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'No transactions added yet!',
+                                  style: TextStyle(fontSize: 16, color: kGrey),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -105,6 +113,14 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        widget.incomesList.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'No transactions added yet!',
+                                  style: TextStyle(fontSize: 16, color: kGrey),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
