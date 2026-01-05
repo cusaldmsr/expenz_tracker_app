@@ -424,7 +424,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 _titleController.clear();
                                 _descriptionController.clear();
                                 _amountController.clear();
-                              } else {
+                              } else if (_selectedMethod == 0 &&
+                                  _formKey.currentState!.validate()) {
                                 //load existing incomes
                                 List<IncomeModel> existingIncomes =
                                     await IncomeServices().getIncomes();
