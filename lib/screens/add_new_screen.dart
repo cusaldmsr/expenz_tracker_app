@@ -34,6 +34,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
   DateTime _selectedDate = DateTime.now();
   DateTime _selectedTime = DateTime.now();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     _amountController.dispose();
@@ -174,6 +176,7 @@ class _AddNewScreenState extends State<AddNewScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -217,6 +220,12 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         //Title TextField
                         TextFormField(
                           controller: _titleController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a title';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             labelText: 'Title',
                             border: OutlineInputBorder(
@@ -228,6 +237,12 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         //Description TextField
                         TextFormField(
                           controller: _descriptionController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a description';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             labelText: 'Description',
                             border: OutlineInputBorder(
@@ -239,6 +254,15 @@ class _AddNewScreenState extends State<AddNewScreen> {
                         //Amount TextField
                         TextFormField(
                           controller: _amountController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter an amount';
+                            }
+                            if (double.tryParse(value) == null) {
+                              return 'Please enter a valid number';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: 'Amount',
@@ -369,7 +393,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
                           height: 50,
                           child: GestureDetector(
                             onTap: () async {
-                              if (_selectedMethod == 1) {
+                              if (_selectedMethod == 1 &&
+                                  _formKey.currentState!.validate()) {
                                 //save the expense/income data into shared preferences
                                 List<ExpensModel> existingExpenses =
                                     await ExpenseServices().fetchExpenses();
@@ -399,7 +424,8 @@ class _AddNewScreenState extends State<AddNewScreen> {
                                 _titleController.clear();
                                 _descriptionController.clear();
                                 _amountController.clear();
-                              } else {
+                              } else if (_selectedMethod == 0 &&
+                                  _formKey.currentState!.validate()) {
                                 //load existing incomes
                                 List<IncomeModel> existingIncomes =
                                     await IncomeServices().getIncomes();
