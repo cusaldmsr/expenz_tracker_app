@@ -55,19 +55,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: () async {
                   //clear the user data from shared preferences
                   await UserService.clearAllUserDetails();
+
+                  //check if widget is still mounted before using context
+                  if (!context.mounted) return;
+
+                  //clear all expenses and incomes
+                  await ExpenseServices.clearAllExpenses(context);
+                  if (!context.mounted) return;
+                  await IncomeServices.clearAllIncomes(context);
+
                   //navigate to onboarding screen
+                  if (!context.mounted) return;
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => const OnboardingScreen(),
                     ),
                     (Route<dynamic> route) => false,
                   );
-
-                  //clear all expenses and incomes
-                  if (context.mounted) {
-                    await ExpenseServices.clearAllExpenses(context);
-                    await IncomeServices.clearAllIncomes(context);
-                  }
                 },
               ),
             ],
