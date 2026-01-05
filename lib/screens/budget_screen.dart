@@ -3,7 +3,7 @@ import 'package:expenz_tracker_app/constants/constants.dart';
 import 'package:expenz_tracker_app/models/expens_model.dart';
 import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:expenz_tracker_app/widgets/budget_pie_chart.dart';
-import 'package:expenz_tracker_app/widgets/custom_button.dart';
+import 'package:expenz_tracker_app/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 
 class BudgetScreen extends StatefulWidget {
@@ -37,24 +37,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Stack(
+          child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(kDefaultPadding),
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    color: kWhite,
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kGrey.withOpacity(0.4),
-                        spreadRadius: 1,
-                        blurRadius: 20,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -115,17 +103,44 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 80.0,
-                  left: kDefaultPadding,
-                  right: kDefaultPadding,
-                  bottom: kDefaultPadding,
-                ),
-                child: BudgetPieChart(
-                  expenseCategoryTotals: widget.expenseCategoryTotals,
-                  incomeCategoryTotals: widget.incomeCategoryTotals,
-                  isExpense: _selectedMethod == 1,
+              BudgetPieChart(
+                expenseCategoryTotals: widget.expenseCategoryTotals,
+                incomeCategoryTotals: widget.incomeCategoryTotals,
+                isExpense: _selectedMethod == 1,
+              ),
+              SizedBox(height: 20),
+              // List of categories
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: _selectedMethod == 1
+                      ? widget.expenseCategoryTotals.length
+                      : widget.incomeCategoryTotals.length,
+                  itemBuilder: (context, index) {
+                    final category = _selectedMethod == 1
+                        ? widget.expenseCategoryTotals.keys.toList()[index]
+                        : widget.incomeCategoryTotals.keys.toList()[index];
+                    final total = _selectedMethod == 1
+                        ? widget.expenseCategoryTotals.values.toList()[index]
+                        : widget.incomeCategoryTotals.values.toList()[index];
+                    return CategoryCard(
+                      title: category.name,
+                      amount: total,
+                      total: _selectedMethod == 1
+                          ? widget.expenseCategoryTotals.values.reduce(
+                              (a, b) => a + b,
+                            )
+                          : widget.incomeCategoryTotals.values.reduce(
+                              (a, b) => a + b,
+                            ),
+                      color: _selectedMethod == 1
+                          ? expensCategoryColors[category as ExpensCategory]!
+                          : incomeCategoryColors[category as IncomeCategory]!,
+                      isExpense: _selectedMethod == 1,
+                    );
+                  },
                 ),
               ),
             ],
