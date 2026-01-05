@@ -89,6 +89,32 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  //category total expense map
+  Map<ExpensCategory, double> get expenseCategoryTotals {
+    Map<ExpensCategory, double> categoryTotals = {};
+    for (var expense in expensesList) {
+      categoryTotals.update(
+        expense.category,
+        (value) => value + expense.amount,
+        ifAbsent: () => expense.amount,
+      );
+    }
+    return categoryTotals;
+  }
+
+  //category total income map
+  Map<IncomeCategory, double> get incomeCategoryTotals {
+    Map<IncomeCategory, double> categoryTotals = {};
+    for (var income in incomesList) {
+      categoryTotals.update(
+        income.category,
+        (value) => value + income.amount,
+        ifAbsent: () => income.amount,
+      );
+    }
+    return categoryTotals;
+  }
+
   @override
   Widget build(BuildContext context) {
     //Screen list
@@ -106,7 +132,10 @@ class _MainScreenState extends State<MainScreen> {
         onDismissedIncomes: _removeIncome,
       ),
       AddNewScreen(onAddExpense: _addNewExpense, onAddIncome: _addNewIncome),
-      const BudgetScreen(),
+      BudgetScreen(
+        expenseCategoryTotals: expenseCategoryTotals,
+        incomeCategoryTotals: incomeCategoryTotals,
+      ),
       const ProfileScreen(),
     ];
 
