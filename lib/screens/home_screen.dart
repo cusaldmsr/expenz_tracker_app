@@ -28,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   //for storeing user details
-  String fullname = '';
+  String fullname = 'New User';
 
   // Calculate totals dynamically
   double get totalIncome {

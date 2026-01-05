@@ -115,4 +115,34 @@ class IncomeServices {
       debugPrint('Error deleting income: $e');
     }
   }
+
+  //Function to clear all incomes from shared preferences
+  static Future<void> clearAllIncomes(BuildContext context) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_incomeKey);
+
+      //Show a success message
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('All incomes cleared successfully!'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to clear incomes'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      debugPrint('Error clearing incomes: $e');
+    }
+  }
 }
