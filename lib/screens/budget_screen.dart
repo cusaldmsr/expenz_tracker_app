@@ -1,10 +1,19 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/constants/constants.dart';
+import 'package:expenz_tracker_app/models/expens_model.dart';
+import 'package:expenz_tracker_app/models/income_model.dart';
+import 'package:expenz_tracker_app/widgets/budget_pie_chart.dart';
 import 'package:expenz_tracker_app/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class BudgetScreen extends StatefulWidget {
-  const BudgetScreen({super.key});
+  final Map<ExpensCategory, double> expenseCategoryTotals;
+  final Map<IncomeCategory, double> incomeCategoryTotals;
+  const BudgetScreen({
+    super.key,
+    required this.expenseCategoryTotals,
+    required this.incomeCategoryTotals,
+  });
 
   @override
   State<BudgetScreen> createState() => _BudgetScreenState();
@@ -105,17 +114,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding,
-                ),
-                child: Container(
-                  margin: const EdgeInsets.only(top: kDefaultPadding * 6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [],
-                  ),
-                ),
+              const SizedBox(height: 20),
+              BudgetPieChart(
+                expenseCategoryTotals: _selectedMethod == 1
+                    ? widget.expenseCategoryTotals
+                    : {},
+                incomeCategoryTotals: _selectedMethod == 0
+                    ? widget.incomeCategoryTotals
+                    : {},
+                isExpense: _selectedMethod == 1,
               ),
             ],
           ),
