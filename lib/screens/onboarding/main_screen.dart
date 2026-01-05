@@ -19,7 +19,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   //current index of bottom navigation bar
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   List<ExpensModel> expensesList = [];
   List<IncomeModel> incomesList = [];
@@ -93,7 +93,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     //Screen list
     final List<Widget> screens = [
-      const HomeScreen(),
+      HomeScreen(
+        expensesList: expensesList,
+        incomesList: incomesList,
+        onDismissedExpenses: _removeExpense,
+        onDismissedIncomes: _removeIncome,
+      ),
       TransactionsScreen(
         expensesList: expensesList,
         onDismissedExpenses: _removeExpense,

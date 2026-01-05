@@ -1,10 +1,26 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
+import 'package:expenz_tracker_app/constants/constants.dart';
+import 'package:expenz_tracker_app/models/expens_model.dart';
+import 'package:expenz_tracker_app/models/income_model.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
+import 'package:expenz_tracker_app/widgets/expense_card.dart';
+import 'package:expenz_tracker_app/widgets/income_card.dart';
 import 'package:expenz_tracker_app/widgets/income_expenz_card.dart';
+import 'package:expenz_tracker_app/widgets/line_chart_sample.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<ExpensModel> expensesList;
+  final List<IncomeModel> incomesList;
+  final void Function(ExpensModel) onDismissedExpenses;
+  final void Function(IncomeModel) onDismissedIncomes;
+  const HomeScreen({
+    super.key,
+    required this.expensesList,
+    required this.incomesList,
+    required this.onDismissedExpenses,
+    required this.onDismissedIncomes,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,6 +29,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //for storeing user details
   String fullname = '';
+
+  // Calculate totals dynamically
+  double get totalIncome {
+    return widget.incomesList.fold(0.0, (sum, income) => sum + income.amount);
+  }
+
+  double get totalExpenses {
+    return widget.expensesList.fold(
+      0.0,
+      (sum, expense) => sum + expense.amount,
+    );
+  }
 
   @override
   void initState() {
@@ -35,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -80,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Spacer(),
                           IconButton(
                             onPressed: () {
-                              // Add your onPressed code here!
+                              // Handle notification icon press
                             },
                             icon: Icon(
                               Icons.notifications_active,
@@ -96,14 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           IncomeExpenzCard(
                             title: 'Income',
-                            amount: "\$500",
+                            amount: '\$ $totalIncome',
                             bgColor: Colors.green,
                             imgPath: 'assets/images/income.png',
                           ),
                           SizedBox(width: 15),
                           IncomeExpenzCard(
                             title: 'Expenses',
-                            amount: "\$300",
+                            amount: '\$ $totalExpenses',
                             bgColor: Colors.red,
                             imgPath: 'assets/images/expense.png',
                           ),
@@ -111,6 +140,110 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              SizedBox(height: 10),
+
+              //line chart
+              Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Spend Frequency',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    LineChartSample(),
+
+                    //Recent Transactions
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Recent Transactions',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.expensesList.length,
+                                itemBuilder: (context, index) {
+                                  final expens = widget.expensesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(expens),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedExpenses(expens);
+                                      });
+                                    },
+                                    child: ExpenseCard(
+                                      title: expens.title,
+                                      date: expens.date,
+                                      amount: expens.amount,
+                                      category: expens.category,
+                                      description: expens.description,
+                                      createdAt: expens.time,
+                                    ),
+                                  );
+                                },
+                              ),
+                              widget.expensesList.isEmpty &&
+                                      widget.incomesList.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        'No transactions added yet!',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: kGrey,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.incomesList.length,
+                                itemBuilder: (context, index) {
+                                  final income = widget.incomesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(income),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedIncomes(income);
+                                      });
+                                    },
+                                    child: IncomeCard(
+                                      title: income.title,
+                                      date: income.date,
+                                      amount: income.amount,
+                                      category: income.category,
+                                      description: income.description,
+                                      createdAt: income.time,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -66,6 +66,7 @@ class _IncomeExpenzCardState extends State<IncomeExpenzCard> {
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
