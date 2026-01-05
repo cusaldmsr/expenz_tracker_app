@@ -114,15 +114,19 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              BudgetPieChart(
-                expenseCategoryTotals: _selectedMethod == 1
-                    ? widget.expenseCategoryTotals
-                    : {},
-                incomeCategoryTotals: _selectedMethod == 0
-                    ? widget.incomeCategoryTotals
-                    : {},
-                isExpense: _selectedMethod == 1,
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 80.0,
+                  left: kDefaultPadding,
+                  right: kDefaultPadding,
+                  bottom: kDefaultPadding,
+                ),
+                child: BudgetPieChart(
+                  expenseCategoryTotals: widget.expenseCategoryTotals,
+                  incomeCategoryTotals: widget.incomeCategoryTotals,
+                  isExpense: _selectedMethod == 1,
+                ),
               ),
             ],
           ),
