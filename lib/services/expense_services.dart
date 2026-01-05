@@ -121,4 +121,31 @@ class ExpenseServices {
       debugPrint('Error deleting expense: $e');
     }
   }
+
+  //remove all expenses from shared preferences
+  static Future<void> clearAllExpenses(BuildContext context) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_expenseKey);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('All expenses cleared successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to clear expenses'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      debugPrint('Error clearing expenses: $e');
+    }
+  }
 }
