@@ -1,5 +1,6 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
+import 'package:expenz_tracker_app/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,19 +13,18 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   //for storeing user details
   String fullname = 'New User';
+  String email = 'not found';
 
   @override
   void initState() {
     super.initState();
-    // Load user details when the screen initializes
-    _loadUserDetails();
-  }
-
-  Future<void> _loadUserDetails() async {
-    // Assuming you have a UserService to get user details
-    final userDetails = await UserService.getUserDetails();
-    setState(() {
-      fullname = userDetails['fullname'] ?? '';
+    UserService.getUserDetails().then((userDetails) {
+      if (userDetails['fullname'] != null && userDetails['email'] != null) {
+        setState(() {
+          fullname = userDetails['fullname']!;
+          email = userDetails['email']!;
+        });
+      }
     });
   }
 
@@ -35,27 +35,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.24,
-                decoration: BoxDecoration(
-                  color: kMainColor.withOpacity(0.35),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15.0,
+                  vertical: 10.0,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 10.0,
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: kMainColor,
+                            border: Border.all(color: kMainColor, width: 2),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(2.0),
                             decoration: BoxDecoration(
-                              color: kMainColor,
+                              color: kWhite,
                               border: Border.all(color: kMainColor, width: 2),
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -64,33 +62,84 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Image.asset(
                                 'assets/images/user.jpg',
                                 fit: BoxFit.cover,
-                                width: 50,
+                                width: 100,
                               ),
                             ),
                           ),
-                          SizedBox(width: 20),
-                          Text(
-                            'Hello, $fullname!',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                        ),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              fullname,
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              // Handle notification icon press
-                            },
-                            icon: Icon(
-                              Icons.notifications_active,
-                              size: 28,
-                              color: kGrey,
+                            Text(
+                              email,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: kGrey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
+                          ],
+                        ),
+                        Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            // Handle notification icon press
+                          },
+                          icon: Icon(
+                            Icons.edit_outlined,
+                            size: 28,
+                            color: kGrey,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    // Profile Cards
+                    ProfileCard(
+                      icon: Icons.person,
+                      title: 'My Wallet',
+                      color: kBlue,
+                    ),
+                    ProfileCard(
+                      icon: Icons.settings,
+                      title: 'Settings',
+                      color: kMainColor,
+                    ),
+                    ProfileCard(
+                      icon: Icons.notifications_none,
+                      title: 'Notifications',
+                      color: kPink,
+                    ),
+                    ProfileCard(
+                      icon: Icons.lock,
+                      title: 'Privacy',
+                      color: kGreen,
+                    ),
+                    ProfileCard(
+                      icon: Icons.help_outline,
+                      title: 'Help & Support',
+                      color: kOrange,
+                    ),
+                    ProfileCard(
+                      icon: Icons.language_sharp,
+                      title: 'App Language',
+                      color: kBrown,
+                    ),
+                    ProfileCard(
+                      icon: Icons.logout,
+                      title: 'Logout',
+                      color: kRed,
+                    ),
+                  ],
                 ),
               ),
             ],
