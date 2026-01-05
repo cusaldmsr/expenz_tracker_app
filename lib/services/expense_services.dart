@@ -133,6 +133,7 @@ class ExpenseServices {
           SnackBar(
             content: Text('All expenses cleared successfully!'),
             backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
           ),
         );
       }
@@ -142,6 +143,7 @@ class ExpenseServices {
           SnackBar(
             content: Text('Failed to clear expenses'),
             backgroundColor: Colors.red,
+            duration: Duration(seconds: 2),
           ),
         );
       }
