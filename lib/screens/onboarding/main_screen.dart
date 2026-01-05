@@ -19,7 +19,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   //current index of bottom navigation bar
-  int _currentIndex = 0;
+  int _currentIndex = 3;
 
   List<ExpensModel> expensesList = [];
   List<IncomeModel> incomesList = [];
