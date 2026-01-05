@@ -131,7 +131,10 @@ class _MainScreenState extends State<MainScreen> {
         incomesList: incomesList,
         onDismissedIncomes: _removeIncome,
       ),
-      AddNewScreen(onAddExpense: _addNewExpense, onAddIncome: _addNewIncome),
+      AddNewScreen(
+        onAddExpense: _addNewExpense, 
+        onAddIncome: _addNewIncome,
+      ),
       BudgetScreen(
         expenseCategoryTotals: expenseCategoryTotals,
         incomeCategoryTotals: incomeCategoryTotals,
