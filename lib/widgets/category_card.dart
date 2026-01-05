@@ -25,10 +25,9 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     double progressWidth = widget.total != 0
-        ? MediaQuery.of(context).size.width *
-            (widget.amount / widget.total)
+        ? MediaQuery.of(context).size.width * (widget.amount / widget.total)
         : 0;
-     return Container(
+    return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.symmetric(
         horizontal: kDefaultPadding,
@@ -37,12 +36,7 @@ class _CategoryCardState extends State<CategoryCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: kWhite,
-        boxShadow: [
-          BoxShadow(
-            color: kBlack.withOpacity(0.1),
-            blurRadius: 20,
-          ),
-        ],
+        boxShadow: [BoxShadow(color: kBlack.withOpacity(0.1), blurRadius: 20)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +50,10 @@ class _CategoryCardState extends State<CategoryCard> {
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 20,
+                  ),
                   child: Row(
                     children: [
                       Text(
@@ -68,9 +64,7 @@ class _CategoryCardState extends State<CategoryCard> {
                           color: kBlack,
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Text(
                         "${(widget.amount / widget.total * 100).toStringAsFixed(2)} %",
                         style: const TextStyle(
@@ -93,9 +87,7 @@ class _CategoryCardState extends State<CategoryCard> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           // Linear progress bar
           Container(
             height: 10,
