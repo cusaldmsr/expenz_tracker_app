@@ -10,11 +10,11 @@ class BudgetPieChart extends StatefulWidget {
   final bool isExpense;
 
   const BudgetPieChart({
-    Key? key,
+    super.key,
     required this.expenseCategoryTotals,
     required this.incomeCategoryTotals,
     required this.isExpense,
-  }) : super(key: key);
+  });
 
   @override
   State<BudgetPieChart> createState() => _BudgetPieChartState();
@@ -25,33 +25,32 @@ class _BudgetPieChartState extends State<BudgetPieChart> {
     if (widget.isExpense) {
       return [
         PieChartSectionData(
-          color: expensCategoryColors[ExpensCategory.food],
-          value: widget.expenseCategoryTotals[ExpensCategory.health] ?? 0,
+          color: expensCategoryColors[ExpensCategory.values[0]],
+          value: widget.expenseCategoryTotals[ExpensCategory.values[0]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: expensCategoryColors[ExpensCategory.shopping],
-          value: widget.expenseCategoryTotals[ExpensCategory.shopping] ?? 0,
+          color: expensCategoryColors[ExpensCategory.values[1]],
+          value: widget.expenseCategoryTotals[ExpensCategory.values[1]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: expensCategoryColors[ExpensCategory.transport],
-          value: widget.expenseCategoryTotals[ExpensCategory.transport] ?? 0,
+          color: expensCategoryColors[ExpensCategory.values[2]],
+          value: widget.expenseCategoryTotals[ExpensCategory.values[2]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: expensCategoryColors[ExpensCategory.subscriptions],
-          value:
-              widget.expenseCategoryTotals[ExpensCategory.subscriptions] ?? 0,
+          color: expensCategoryColors[ExpensCategory.values[3]],
+          value: widget.expenseCategoryTotals[ExpensCategory.values[3]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: expensCategoryColors[ExpensCategory.food],
-          value: widget.expenseCategoryTotals[ExpensCategory.food] ?? 0,
+          color: expensCategoryColors[ExpensCategory.values[4]],
+          value: widget.expenseCategoryTotals[ExpensCategory.values[4]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
@@ -59,26 +58,26 @@ class _BudgetPieChartState extends State<BudgetPieChart> {
     } else {
       return [
         PieChartSectionData(
-          color: incomeCategoryColors[IncomeCategory.salary],
-          value: widget.incomeCategoryTotals[IncomeCategory.salary] ?? 0,
+          color: incomeCategoryColors[IncomeCategory.values[0]],
+          value: widget.incomeCategoryTotals[IncomeCategory.values[0]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: incomeCategoryColors[IncomeCategory.freelance],
-          value: widget.incomeCategoryTotals[IncomeCategory.freelance] ?? 0,
+          color: incomeCategoryColors[IncomeCategory.values[1]],
+          value: widget.incomeCategoryTotals[IncomeCategory.values[1]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: incomeCategoryColors[IncomeCategory.passiveIncome],
-          value: widget.incomeCategoryTotals[IncomeCategory.passiveIncome] ?? 0,
+          color: incomeCategoryColors[IncomeCategory.values[2]],
+          value: widget.incomeCategoryTotals[IncomeCategory.values[2]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
         PieChartSectionData(
-          color: incomeCategoryColors[IncomeCategory.freelance],
-          value: widget.incomeCategoryTotals[IncomeCategory.sales] ?? 0,
+          color: incomeCategoryColors[IncomeCategory.values[3]],
+          value: widget.incomeCategoryTotals[IncomeCategory.values[3]] ?? 0,
           showTitle: false,
           radius: 60,
         ),
@@ -99,10 +98,6 @@ class _BudgetPieChartState extends State<BudgetPieChart> {
     return Container(
       height: 250,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
       child: Stack(
         alignment: Alignment.center,
         children: [
