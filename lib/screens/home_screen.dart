@@ -30,6 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
   //for storeing user details
   String fullname = '';
 
+  // Calculate totals dynamically
+  double get totalIncome {
+    return widget.incomesList.fold(0.0, (sum, income) => sum + income.amount);
+  }
+
+  double get totalExpenses {
+    return widget.expensesList.fold(
+      0.0,
+      (sum, expense) => sum + expense.amount,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -113,14 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           IncomeExpenzCard(
                             title: 'Income',
-                            amount: "\$500",
+                            amount: '\$ $totalIncome',
                             bgColor: Colors.green,
                             imgPath: 'assets/images/income.png',
                           ),
                           SizedBox(width: 15),
                           IncomeExpenzCard(
                             title: 'Expenses',
-                            amount: "\$300",
+                            amount: '\$ $totalExpenses',
                             bgColor: Colors.red,
                             imgPath: 'assets/images/expense.png',
                           ),
