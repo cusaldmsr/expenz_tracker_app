@@ -65,32 +65,32 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                   style: TextStyle(fontSize: 16, color: kGrey),
                                 ),
                               )
-                            : const SizedBox.shrink(),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.expensesList.length,
-                          itemBuilder: (context, index) {
-                            final expens = widget.expensesList[index];
-                            return Dismissible(
-                              key: ValueKey(expens),
-                              direction: DismissDirection.startToEnd,
-                              onDismissed: (direction) {
-                                setState(() {
-                                  widget.onDismissedExpenses(expens);
-                                });
-                              },
-                              child: ExpenseCard(
-                                title: expens.title,
-                                date: expens.date,
-                                amount: expens.amount,
-                                category: expens.category,
-                                description: expens.description,
-                                createdAt: expens.time,
+                            // : const SizedBox.shrink(),
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.expensesList.length,
+                                itemBuilder: (context, index) {
+                                  final expens = widget.expensesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(expens),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedExpenses(expens);
+                                      });
+                                    },
+                                    child: ExpenseCard(
+                                      title: expens.title,
+                                      date: expens.date,
+                                      amount: expens.amount,
+                                      category: expens.category,
+                                      description: expens.description,
+                                      createdAt: expens.time,
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),
@@ -120,32 +120,32 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                                   style: TextStyle(fontSize: 16, color: kGrey),
                                 ),
                               )
-                            : const SizedBox.shrink(),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.incomesList.length,
-                          itemBuilder: (context, index) {
-                            final income = widget.incomesList[index];
-                            return Dismissible(
-                              key: ValueKey(income),
-                              direction: DismissDirection.startToEnd,
-                              onDismissed: (direction) {
-                                setState(() {
-                                  widget.onDismissedIncomes(income);
-                                });
-                              },
-                              child: IncomeCard(
-                                title: income.title,
-                                date: income.date,
-                                amount: income.amount,
-                                category: income.category,
-                                description: income.description,
-                                createdAt: income.time,
+                            // : const SizedBox.shrink(),
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.incomesList.length,
+                                itemBuilder: (context, index) {
+                                  final income = widget.incomesList[index];
+                                  return Dismissible(
+                                    key: ValueKey(income),
+                                    direction: DismissDirection.startToEnd,
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        widget.onDismissedIncomes(income);
+                                      });
+                                    },
+                                    child: IncomeCard(
+                                      title: income.title,
+                                      date: income.date,
+                                      amount: income.amount,
+                                      category: income.category,
+                                      description: income.description,
+                                      createdAt: income.time,
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),
