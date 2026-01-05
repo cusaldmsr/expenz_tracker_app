@@ -1,116 +1,80 @@
 # expenz_tracker_app
 
-A Flutter expense tracker app scaffold with onboarding, theming, and a user data form.
+Flutter expense tracker with onboarding, profile capture, and shared-preferences backed income/expense management.
 
-**Overview**
+## What’s inside
 
-- **Purpose:** Foundation for an expense tracking application with an onboarding flow and basic form to collect user details.
-- **Entry Point:** See [lib/main.dart](lib/main.dart).
-- **Primary Screens:** [lib/screens/onboarding_screen.dart](lib/screens/onboarding_screen.dart), [lib/screens/user_data_screen.dart](lib/screens/user_data_screen.dart).
+- **Onboarding** with logo splash, three feature slides, and a worm indicator in [lib/screens/onboarding_screen.dart](lib/screens/onboarding_screen.dart) using `smooth_page_indicator`.
+- **Profile capture** form in [lib/screens/user_data_screen.dart](lib/screens/user_data_screen.dart) (name, email, phone, password/confirm, remember toggle) persisted via [lib/services/user_services.dart](lib/services/user_services.dart).
+- **Wrapper logic** in [lib/widgets/wrapper.dart](lib/widgets/wrapper.dart) that decides between onboarding and the main app based on stored fullname.
+- **Main app shell** in [lib/screens/onboarding/main_screen.dart](lib/screens/onboarding/main_screen.dart) with bottom navigation: Home, Transactions, Add, Budget, Profile.
+- **Income/expense CRUD** via [lib/screens/add_new_screen.dart](lib/screens/add_new_screen.dart) with category pickers, date/time pickers, and persistence through [lib/services/expense_services.dart](lib/services/expense_services.dart) and [lib/services/income_services.dart](lib/services/income_services.dart).
+- **Visualization**: line chart on Home ([lib/widgets/line_chart_sample.dart](lib/widgets/line_chart_sample.dart)) and pie chart with category breakdown on Budget ([lib/widgets/budget_pie_chart.dart](lib/widgets/budget_pie_chart.dart)).
+- **UI building blocks**: Inter font family, palette in [lib/constants/colors.dart](lib/constants/colors.dart), spacing constants in [lib/constants/constants.dart](lib/constants/constants.dart), reusable buttons/cards under [lib/widgets](lib/widgets).
 
-**Features**
+## Tech stack
 
-- **Onboarding Flow:** Four pages with a worm-style page indicator (via `smooth_page_indicator`).
-- **Custom Theme:** Global Inter font family with a defined color palette.
-- **User Data Form:** Validated inputs for name, email, phone, password + confirm, and a “Remember Me” option.
-- **Navigation:** Context-aware button switches from Next to Get Started, routing into the app.
-- **Assets & Icons:** Organized images and app icons under `assets/`.
-- **Extensible Persistence:** `shared_preferences` included for future local storage needs.
+- Flutter (Material), Dart ^3.10.4
+- Packages: smooth_page_indicator, shared_preferences, intl, fl_chart, cupertino_icons
+- State management: setState (no external state lib yet)
+- Persistence: SharedPreferences (local only)
 
-**Tech Stack**
+## Project structure (high level)
 
-- **Flutter:** Stable channel (Material design).
-- **Dart:** 3.10+ (project `environment` is `^3.10.4`).
-- **Packages:** `smooth_page_indicator`, `shared_preferences`, `cupertino_icons`, `flutter_lints`.
+- [lib/main.dart](lib/main.dart): bootstraps app, checks stored fullname to skip onboarding
+- [lib/screens](lib/screens): onboarding flow, profile capture, dashboard tabs
+- [lib/services](lib/services): shared_preferences helpers for user, income, expense
+- [lib/models](lib/models): enums/models for expenses and incomes
+- [lib/widgets](lib/widgets): buttons, cards, charts, wrappers
+- [assets/](assets/): images, icons, Inter fonts declared in [pubspec.yaml](pubspec.yaml)
 
-**Project Structure**
+## App flow
 
-- **App:** [lib/](lib/) contains core code
-  - **Main:** [lib/main.dart](lib/main.dart) bootstraps `MaterialApp` with Inter font
-  - **Screens:** [lib/screens/onboarding_screen.dart](lib/screens/onboarding_screen.dart), [lib/screens/user_data_screen.dart](lib/screens/user_data_screen.dart), plus onboarding sub-screens in [lib/screens/onboarding](lib/screens/onboarding)
-  - **Widgets:** [lib/widgets/custom_button.dart](lib/widgets/custom_button.dart)
-  - **Constants:** [lib/constants/colors.dart](lib/constants/colors.dart), [lib/constants/constants.dart](lib/constants/constants.dart)
-  - **Data/Models:** [lib/data/onboarding_data.dart](lib/data/onboarding_data.dart), [lib/models/onboarding_model.dart](lib/models/onboarding_model.dart)
-- **Assets:** images, icons, and fonts under [assets/](assets/)
-- **Platform:** standard Flutter platform folders (`android/`, `ios/`, `web/`, `windows/`, `linux/`, `macos/`)
-- **Tests:** sample widget test in [test/widget_test.dart](test/widget_test.dart)
+1. Launch: [lib/main.dart](lib/main.dart) initializes SharedPreferences and asks [UserService.checkFullname()](lib/services/user_services.dart) whether to show onboarding.
+2. Onboarding: swipe through feature slides; CTA moves to profile form.
+3. Profile form: validate inputs, store to SharedPreferences, then enter the main app.
+4. Main app: bottom nav surfaces Home, Transactions, Add, Budget, Profile; add or delete income/expense entries, view charts and recent items.
 
-**Requirements**
+## Run locally
 
-- **Flutter SDK:** Install from https://docs.flutter.dev (ensure Dart 3.10+).
-- **Platforms:** Android Studio/Xcode/Visual Studio toolchains as needed per target.
+```powershell
+flutter pub get
+flutter run            # default device
+flutter run -d windows # example desktop target
+```
 
-**Setup**
+## Build
 
-1. Install Flutter and verify:
-   ```powershell
-   flutter --version
-   flutter doctor
-   ```
-2. Fetch dependencies:
-   ```powershell
-   flutter pub get
-   ```
+- Android APK: `flutter build apk`
+- iOS (on macOS): `flutter build ios`
+- Windows: `flutter build windows`
 
-**Run**
+## Testing and linting
 
-- Start the app on a connected device or emulator:
-  ```powershell
-  flutter run
-  ```
-- Specify platform/device when needed (examples):
-  ```powershell
-  flutter run -d windows
-  flutter run -d chrome
-  flutter run -d emulator-5554
-  ```
+- Analyze: `flutter analyze`
+- Tests: `flutter test`
 
-**Build**
+## Data and persistence
 
-- Android APK:
-  ```powershell
-  flutter build apk
-  ```
-- iOS (on macOS with Xcode):
-  ```bash
-  flutter build ios
-  ```
-- Windows desktop:
-  ```powershell
-  flutter build windows
-  ```
+- User profile keys: fullname, email, phoneNumber, password (stored in SharedPreferences; not encrypted—use secure storage for production).
+- Expense key: expenses; Income key: incomes. Each entry is serialized JSON of [ExpensModel](lib/models/expens_model.dart) or [IncomeModel](lib/models/income_model.dart).
+- Deleting an item rewrites the stored list.
 
-**Configuration**
+## Assets and theming
 
-- **App Theme:** Set in [lib/main.dart](lib/main.dart) using Inter font.
-- **Colors:** Update palette in [lib/constants/colors.dart](lib/constants/colors.dart).
-- **Layout Constants:** Adjust spacing in [lib/constants/constants.dart](lib/constants/constants.dart).
-- **Assets:** Declared in [pubspec.yaml](pubspec.yaml) under `flutter.assets` and `flutter.fonts`.
+- Color palette in [lib/constants/colors.dart](lib/constants/colors.dart); spacing in [lib/constants/constants.dart](lib/constants/constants.dart).
+- Inter fonts registered in [pubspec.yaml](pubspec.yaml); MaterialApp sets `fontFamily: 'Inter'` in [lib/main.dart](lib/main.dart).
+- Image assets under [assets/images](assets/images) and icons under [assets/app_icons](assets/app_icons).
 
-**Screenshots**
+## Troubleshooting
 
-- Add images to `docs/` and reference here (e.g., onboarding, form screen).
+- If onboarding repeats, ensure fullname is stored (SharedPreferences clear will reset flow).
+- If charts show empty data, verify incomes/expenses exist and are not zero-valued entries.
+- Hot reload issues on Windows: restart `flutter run -d windows` after font/asset changes.
 
-**Roadmap Ideas**
+## Future ideas
 
-- **Expense Tracking:** Transactions list with categories and notes.
-- **Budgets:** Monthly/weekly budgets and progress tracking.
-- **Reports:** Charts and trends (aligns with onboarding).
-- **Persistence:** Initialize `shared_preferences` for onboarding completion; consider Hive/SQLite for data.
-- **Auth:** Optional sign-in and secure storage.
-
-**Testing**
-
-- Run tests:
-  ```powershell
-  flutter test
-  ```
-
-**Contributing**
-
-- Open issues/PRs with concise context and screenshots when relevant.
-- Follow `flutter_lints` and keep widgets/components small and composable.
-
-**License**
-
-- No license specified. Add one if you plan to open-source.
+- Secure storage for credentials, cloud sync, authentication
+- Search/filter for transactions, CSV export/import
+- Budget targets with alerts, recurring transactions
+- Theming toggle and accessibility passes
