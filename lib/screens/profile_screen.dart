@@ -1,4 +1,7 @@
 import 'package:expenz_tracker_app/constants/colors.dart';
+import 'package:expenz_tracker_app/screens/onboarding_screen.dart';
+import 'package:expenz_tracker_app/services/expense_services.dart';
+import 'package:expenz_tracker_app/services/income_services.dart';
 import 'package:expenz_tracker_app/services/user_services.dart';
 import 'package:expenz_tracker_app/widgets/profile_card.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(20),
           child: Wrap(
             children: [
-              ListTile(
-                title: const Text('Are you sure you want to logout?'),
-              ),
+              ListTile(title: const Text('Are you sure you want to logout?')),
 
               ListTile(
                 leading: const Icon(Icons.cancel, color: kGrey),
@@ -51,9 +52,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ListTile(
                 leading: const Icon(Icons.logout, color: kRed),
                 title: const Text('Logout', style: TextStyle(color: kRed)),
-                onTap: () {
-                  // Handle logout action
-                  Navigator.of(context).pop();
+                onTap: () async {
+                  //clear the user data from shared preferences
+                  await UserService.clearAllUserDetails();
+                  //navigate to onboarding screen
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const OnboardingScreen(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+
+                  //clear all expenses and incomes
+                  if (context.mounted) {
+                    await ExpenseServices.clearAllExpenses(context);
+                    await IncomeServices.clearAllIncomes(context);
+                  }
                 },
               ),
             ],
