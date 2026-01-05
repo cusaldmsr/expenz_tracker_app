@@ -60,4 +60,14 @@ class UserService {
     String? fullname = prefs.getString('fullname');
     return fullname != null;
   }
+
+  //remove all user details from shared preferences
+  static Future<void> clearAllUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove( 'fullname');
+    await prefs.remove('email');
+    await prefs.remove('phoneNumber');
+    await prefs.remove('password');
+  }
+
 }
