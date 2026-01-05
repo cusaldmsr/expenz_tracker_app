@@ -28,6 +28,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  //open scaffold messenger for logout
+  void _showLogoutMessage(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          child: Wrap(
+            children: [
+              ListTile(
+                title: const Text('Are you sure you want to logout?'),
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.cancel, color: kGrey),
+                title: const Text('Cancel'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout, color: kRed),
+                title: const Text('Logout', style: TextStyle(color: kRed)),
+                onTap: () {
+                  // Handle logout action
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,10 +169,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: 'App Language',
                       color: kBrown,
                     ),
-                    ProfileCard(
-                      icon: Icons.logout,
-                      title: 'Logout',
-                      color: kRed,
+                    GestureDetector(
+                      onTap: () {
+                        _showLogoutMessage(context);
+                      },
+                      child: ProfileCard(
+                        icon: Icons.logout,
+                        title: 'Logout',
+                        color: kRed,
+                      ),
                     ),
                   ],
                 ),
