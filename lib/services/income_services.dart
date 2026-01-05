@@ -117,7 +117,7 @@ class IncomeServices {
   }
 
   //Function to clear all incomes from shared preferences
-  Future<void> clearAllIncomes(BuildContext context) async {
+  static Future<void> clearAllIncomes(BuildContext context) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(_incomeKey);
