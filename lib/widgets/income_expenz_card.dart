@@ -19,6 +19,18 @@ class IncomeExpenzCard extends StatefulWidget {
 }
 
 class _IncomeExpenzCardState extends State<IncomeExpenzCard> {
+  String _formatAmount(String amount) {
+    try {
+      final cleanAmount = amount.replaceAll(RegExp(r'[^\d.]'), '');
+      final parsedAmount = double.parse(cleanAmount);
+      return parsedAmount / 1000 >= 1
+          ? '${(parsedAmount / 1000).toStringAsFixed(1)}K'
+          : cleanAmount;
+    } catch (e) {
+      return amount;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,13 +73,15 @@ class _IncomeExpenzCardState extends State<IncomeExpenzCard> {
               ),
               const SizedBox(height: 0),
               Text(
-                widget.amount,
+                _formatAmount(widget.amount),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
                 ),
+
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ],
           ),
